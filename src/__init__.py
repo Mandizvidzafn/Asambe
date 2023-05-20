@@ -20,11 +20,11 @@ def create_app():
 
     # login manger conf
     passenger_login_manager.login_view = "passenger_auth.signin"
-
+    driver_login_manager.login_view = "driver_auth.signin"
     # initializations
     db.init_app(app)
-
     passenger_login_manager.init_app(app)
+    driver_login_manager.init_app(app)
 
     # Models
     from .models.passenger import Passenger
@@ -37,15 +37,9 @@ def create_app():
     def load_passenger(passenger_id):
         return Passenger.query.get(int(passenger_id))
 
-    # @passenger_login_manager.user_loader
-    # def load_user(user_id):
-    #    # Check if the user is a passenger or driver
-    #    if Passenger.query.get(user_id):
-    #        return Passenger.query.get(user_id)
-    #    elif Driver.query.get(user_id):
-    #        return Driver.query.get(user_id)
-    #    else:
-    #        return None
+    @driver_login_manager.user_loader
+    def load_driver(driver_id):
+        return Driver.query.get(int(driver_id))
 
     # create the database
     create_database(app)
@@ -53,9 +47,13 @@ def create_app():
     # Registering blueprints
     from .routes.passenger.auth import passenger_auth
     from .routes.passenger.views import passenger_views
+    from .routes.driver.auth import driver_auth
+    from .routes.driver.views import driver_views
 
     app.register_blueprint(passenger_auth)
     app.register_blueprint(passenger_views)
+    app.register_blueprint(driver_auth)
+    app.register_blueprint(driver_views)
 
     return app
 

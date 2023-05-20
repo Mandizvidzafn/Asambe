@@ -6,11 +6,11 @@ from src import db
 from flask_login import login_required
 
 
-passenger_views = Blueprint("passenger_views", __name__)
+passenger_views = Blueprint("passenger_views", __name__, url_prefix="/passenger")
 
 
 @passenger_views.route("/")
-@passenger_views.route("/passenger/home", methods=["GET", "POST"])
+@passenger_views.route("/home", methods=["GET", "POST"])
 @login_required
 def home():
     return render_template("passenger/home.html")
