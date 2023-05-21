@@ -10,4 +10,6 @@ class Driver(db.Model, BaseModel, UserMixin):
     phone = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(45), nullable=False)
     active = db.Column(db.Boolean(), default=False)
-    vehicleId = db.Column(db.Integer(), db.ForeignKey("vehicle.id"))
+    vehicle_type = db.Column(db.Integer(), db.ForeignKey("vehicle.type"))
+    vehicle = db.relationship("Vehicle", backref="drivers")
+    newsletter = db.Column(db.Boolean(), default=False)

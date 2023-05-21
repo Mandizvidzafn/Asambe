@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Admin DashBoard</h1>
+
+    <form action="" method="post">
+        <h3>Add vehicle</h3>
+        {{ form.vehicle.label }}
+        {{ form.vehicle }}
+    </form>
+
+    <h4>Drivers</h4>
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Vehicle</th>
+            <th>Phone</th>    
+        </thead>
+        <tbody>
+            {% for driver in drivers %}
+            <td>{{ driver.firstname }}</td>
+            <td>{{ driver.lastname }}</td>
+            <td>{{ driver.VehicleID }}</td>
+            <td>{{ driver.phone }}</td>
+        </tbody>
+    </table>
+
+
+    <h4>Passengers</h4>
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Vehicle</th>
+            <th>Phone</th>    
+        </thead>
+        <tbody>
+            {% for passenger in passengers %}
+            <td>{{ passenger.firstname }}</td>
+            <td>{{ passenger.lastname }}</td>
+            <td>{{ passenger.VehicleID }}</td>
+            <td>{{ passenger.phone }}</td>
+        </tbody>
+    </table>
+</body>
+</html>

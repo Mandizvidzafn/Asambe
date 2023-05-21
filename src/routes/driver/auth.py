@@ -1,7 +1,8 @@
 from flask import Blueprint, redirect, render_template, flash, url_for
-from flask_login import login_required
+from flask_login import login_required, login_user, logout_user, current_user
 from src.forms.driver import SigninForm, SignupForm, ForgotPasswordForm, VerifyOTPForm
 from src.models.driver import Driver
+from src.models.vehicle import Vehicle
 from src import db
 from flask_bcrypt import check_password_hash, generate_password_hash
 
@@ -15,11 +16,13 @@ def signup():
         firstname = form.firstname.data
         lastname = form.lastname.data
         phone = form.phone.data
-        vehicle = form.vehicle.data
+        vehicle_type = form.vehicle.data
         newsletter = form.newsletter.data
         password = form.password.data
 
-        hashed_password = generate_password_hash(password, rounds=12, salt_size=16)
+        vehicle_id = Vehicle.query.get(vehicle_type)
+
+        hashed_password = generate_password_hash(password, rounds=12)
 
         user = Driver.query.filter_by(phone=phone).first()
         if user:
@@ -29,7 +32,7 @@ def signup():
                 lastname=lastname,
                 firstname=firstname,
                 phone=phone,
-                vehicle=vehicle,
+                vehicle=vehicle_id,
                 newsletter=newsletter,
                 password=hashed_password,
             )
@@ -42,15 +45,19 @@ def signup():
 
 @driver_auth.route("/signin", methods=["GET", "POST"])
 def signin():
+    if current_user.is_authenticated:
+        return redirect(url_for("driver_views.home"))
+
     form = SigninForm()
 
     if form.validate_on_submit():
         phone = form.phone.data
         password = form.password.data
 
-        existing_driver = Driver.query.filter_by(phone=phone)
+        existing_driver = Driver.query.filter_by(phone=phone).first()
         if existing_driver:
             if check_password_hash(existing_driver.password, password):
+                login_user(existing_driver, remember=True)
                 return redirect(url_for("driver_views.home"))
             else:
                 flash("incorrect phone or password")
@@ -85,3 +92,10 @@ def verify_otp():
                 return redirect(url_for("driver_views.home"))
 
     return render_template("driver/verify_otp.html", form=form)
+
+
+@driver_auth.route("/", methods=["GET", "POST"])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("driver_auth.signin"))
