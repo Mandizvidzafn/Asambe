@@ -50,12 +50,14 @@ def create_app():
     from .routes.driver.auth import driver_auth
     from .routes.driver.views import driver_views
     from .routes.admin.view import admin_views
+    from .routes.admin.auth import admin_auth
 
     app.register_blueprint(passenger_auth)
     app.register_blueprint(passenger_views)
     app.register_blueprint(driver_auth)
     app.register_blueprint(driver_views)
     app.register_blueprint(admin_views)
+    app.register_blueprint(admin_auth)
 
     return app
 

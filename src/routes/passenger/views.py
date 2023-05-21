@@ -7,6 +7,7 @@ from flask_login import current_user
 from ..multiple_login_required import login_required_with_manager
 from src import passenger_login_manager
 
+
 passenger_views = Blueprint("passenger_views", __name__, url_prefix="/passenger")
 
 

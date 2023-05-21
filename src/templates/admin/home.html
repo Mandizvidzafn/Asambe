@@ -11,8 +11,9 @@
 
     <form action="" method="post">
         <h3>Add vehicle</h3>
-        {{ form.vehicle.label }}
-        {{ form.vehicle }}
+        {{ form.type.label }}
+        {{ form.type }}
+        {{ form.submit }}
     </form>
 
     <h4>Drivers</h4>
@@ -27,8 +28,10 @@
             {% for driver in drivers %}
             <td>{{ driver.firstname }}</td>
             <td>{{ driver.lastname }}</td>
-            <td>{{ driver.VehicleID }}</td>
+            <td>{{ driver.type }}</td>
             <td>{{ driver.phone }}</td>
+            <td><button type="submit" id="{{driver.id}}">delete</button></td>
+            {% endfor %}
         </tbody>
     </table>
 
@@ -38,15 +41,16 @@
         <thead>
             <th>Name</th>
             <th>Surname</th>
-            <th>Vehicle</th>
             <th>Phone</th>    
         </thead>
         <tbody>
-            {% for passenger in passengers %}
-            <td>{{ passenger.firstname }}</td>
-            <td>{{ passenger.lastname }}</td>
-            <td>{{ passenger.VehicleID }}</td>
-            <td>{{ passenger.phone }}</td>
+            <tr>
+                {% for passenger in passengers %}
+                <td>{{ passenger.firstname }}</td>
+                <td>{{ passenger.lastname }}</td>
+                <td>{{ passenger.phone }}</td>
+                {% endfor %}
+            </tr>
         </tbody>
     </table>
 </body>

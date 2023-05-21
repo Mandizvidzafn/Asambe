@@ -27,5 +27,9 @@ def home():
             flash("Type exists", "error")
 
     return render_template(
-        "admin/home.html", passengers=passengers, drivers=drivers, vehicles=vehicles
+        "admin/home.html",
+        passengers=passengers,
+        drivers=drivers,
+        vehicles=vehicles,
+        form=form,
     )
