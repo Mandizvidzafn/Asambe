@@ -30,7 +30,7 @@ def signup():
         phone = form.phone.data
         password = form.password.data
         newsletter = form.newsletter.data
-        hashed_password = generate_password_hash(password, rounds=12, salt_size=16)
+        hashed_password = generate_password_hash(password, rounds=12)
         check_phone = Passenger.query.filter_by(phone=phone).first()
         if check_phone:
             form.phone.errors.append("Phone number exits. Sign in instead")
