@@ -4,6 +4,7 @@ from flask import Flask
 from os import path
 from flask_login import LoginManager
 
+
 passenger_login_manager = LoginManager()
 driver_login_manager = LoginManager()
 loginManager = LoginManager()

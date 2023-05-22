@@ -12,3 +12,5 @@ class Passenger(db.Model, BaseModel, UserMixin):
     status = db.Column(db.Boolean(), default=False)
     locationId = db.Column(db.Integer(), db.ForeignKey("location.id"))
     newsletter = db.Column(db.Boolean(), default=False)
+    number_visibility = db.Column(db.Boolean(), default=False)
+    profile_visibility = db.Column(db.Boolean(), default=False)
