@@ -33,3 +33,17 @@ def home():
         vehicles=vehicles,
         form=form,
     )
+
+
+@admin_views.route("/drivers", methods=["GET", "POST"])
+def get_drivers():
+    render_template("admin/drivers.html")
+
+
+@admin_views.route("/drivers", methods=["GET", "POST"])
+def del_driver(id):
+    driver_id = Driver.query.filter_by(id)
+    if driver_id:
+        db.session.delete(driver_id)
+        db.session.commit()
+    render_template("admin/drivers.html")

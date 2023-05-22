@@ -1,5 +1,5 @@
 """auth.py"""
-from flask import redirect, render_template, request, Blueprint, url_for, flash
+from flask import redirect, render_template, request, Blueprint, url_for, flash, session
 from src.forms.passenger import (
     SignupForm,
     SigninForm,
@@ -10,8 +10,23 @@ from src.models.passenger import Passenger
 from src import db
 from flask_login import login_user, logout_user
 from flask_bcrypt import generate_password_hash, check_password_hash
+from dotenv import load_dotenv
+import os
+from twilio.rest import Client
+from ..multiple_login_required import login_required_with_manager
+from src import passenger_login_manager
 
 passenger_auth = Blueprint("passenger_auth", __name__, url_prefix="/passenger")
+
+
+load_dotenv()
+
+from_phone = os.getenv("TWILIO_PHONE_NUMBER")
+auth_token = os.getenv("ACCOUNT_AUTH_TOKEN")
+account_sid = os.getenv("ACCOUNT_SID")
+verify_sid = os.getenv("VERIFY_SID")
+reset_sid = os.getenv("RESET_SID")
+client = Client(account_sid, auth_token)
 
 
 @passenger_auth.route("/signup", methods=["GET", "POST"])
@@ -44,7 +59,12 @@ def signup():
             )
             db.session.add(new_user)
             db.session.commit()
-            return redirect(url_for("passenger_auth.verify_otp"))
+            session["phone"] = phone
+            send_otp = client.verify.services(verify_sid).verifications.create(
+                to=phone, channel="sms"
+            )
+            if send_otp.sid:
+                return redirect(url_for("passenger_auth.verify_otp"))
 
     return render_template("passenger/signup.html", form=form)
 
@@ -74,8 +94,12 @@ def forgot_password():
 
     if form.validate_on_submit():
         phone = form.phone.data
-
-        return redirect(url_for("passenger_auth.verify_otp"))
+        session["phone"] = phone
+        send_otp = client.verify.services(reset_sid).verifications.create(
+            to=phone, channel="sms"
+        )
+        if send_otp.sid:
+            return redirect(url_for("passenger_auth.verify_otp"))
 
     return render_template("passenger/forgot_password.html", form=form)
 
@@ -85,12 +109,30 @@ def verify_otp():
     form = VerifyOTPForm()
 
     if form.validate_on_submit():
-        if form.validate_on_submit():
-            otp = form.otp.data
+        otp = form.otp.data
 
-            if not int(otp):
-                flash("OTP is a 6 digit code")
-            else:
+        try:
+            otp_int = int(otp)
+        except ValueError:
+            flash("OTP should contain only numbers", "error")
+            return render_template("passenger/verify_otp.html", form=form)
+        if len(str(otp_int)) != 6:
+            flash("OTP should be a 6-digit code", "error")
+        else:
+            phone = session.clear("phone")
+            verify_otp_code = client.verify.services(
+                verify_sid
+            ).verification_checks.create(to=phone, code=otp_int)
+            if verify_otp_code.status == "approved":
                 return redirect(url_for("passenger_views.home"))
-
+            else:
+                flash("Wrong OTP", "error")
     return render_template("passenger/verify_otp.html", form=form)
+
+
+@passenger_auth.route("/logout", methods=["GET", "POST"])
+@login_required_with_manager(passenger_login_manager)
+def logout():
+    session.clear()
+    login_user()
+    return redirect(url_for("passenger_auth.signin"))

@@ -5,8 +5,16 @@ from wtforms import (
     TelField,
     SubmitField,
     BooleanField,
+    IntegerField,
 )
-from wtforms.validators import EqualTo, Length, InputRequired, DataRequired
+from wtforms.validators import (
+    EqualTo,
+    Length,
+    InputRequired,
+    DataRequired,
+    NumberRange,
+    Regexp,
+)
 
 
 class SignupForm(FlaskForm):
@@ -47,4 +55,4 @@ class ForgotPasswordForm(FlaskForm):
 
 class VerifyOTPForm(FlaskForm):
     otp = StringField("Enter OTP", validators=[InputRequired(), Length(min=6, max=6)])
-    submit = SubmitField("Submit")
+    submit = SubmitField("Verify")

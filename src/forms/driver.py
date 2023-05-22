@@ -50,4 +50,4 @@ class ForgotPasswordForm(FlaskForm):
 
 class VerifyOTPForm(FlaskForm):
     otp = StringField("Enter OTP", validators=[InputRequired(), Length(min=6, max=6)])
-    submit = SubmitField("Submit")
+    submit = SubmitField("Verify")

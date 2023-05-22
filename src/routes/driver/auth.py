@@ -1,12 +1,27 @@
-from flask import Blueprint, redirect, render_template, flash, url_for
-from flask_login import login_required, login_user, logout_user, current_user
+from flask import Blueprint, redirect, render_template, flash, url_for, session
+from flask_login import login_user, logout_user, current_user
+from ..multiple_login_required import login_required_with_manager
+from src import driver_login_manager
 from src.forms.driver import SigninForm, SignupForm, ForgotPasswordForm, VerifyOTPForm
 from src.models.driver import Driver
 from src.models.vehicle import Vehicle
 from src import db
 from flask_bcrypt import check_password_hash, generate_password_hash
+from twilio.rest import Client
+from dotenv import load_dotenv
+import os
 
 driver_auth = Blueprint("driver_auth", __name__, url_prefix="/driver")
+
+
+load_dotenv()
+
+from_phone = os.getenv("TWILIO_PHONE_NUMBER")
+auth_token = os.getenv("ACCOUNT_AUTH_TOKEN")
+account_sid = os.getenv("ACCOUNT_SID")
+verify_sid = os.getenv("VERIFY_SID")
+reset_sid = os.getenv("RESET_SID")
+client = Client(account_sid, auth_token)
 
 
 @driver_auth.route("/signup", methods=["GET", "POST"])
@@ -39,7 +54,12 @@ def signup():
 
             db.session.add(new_user)
             db.session.commit()
-            return redirect(url_for("driver_auth.verify_otp"))
+            session["phone"] = phone
+            send_otp = client.verify.services(verify_sid).verifications.create(
+                to=phone, channel="sms"
+            )
+            if send_otp.sid:
+                return redirect(url_for("driver_auth.verify_otp"))
     return render_template("driver/signup.html", form=form)
 
 
@@ -73,7 +93,12 @@ def forgot_password():
     if form.validate_on_submit():
         phone = form.phone.data
 
-        return redirect(url_for("driver_auth.verify_otp"))
+        session["phone"] = phone
+        send_otp = client.verify.services(reset_sid).verifications.create(
+            to=phone, channel="sms"
+        )
+        if send_otp.sid:
+            return redirect(url_for("driver_auth.verify_otp"))
 
     return render_template("driver/forgot_password.html", form=form)
 
@@ -83,19 +108,30 @@ def verify_otp():
     form = VerifyOTPForm()
 
     if form.validate_on_submit():
-        if form.validate_on_submit():
-            otp = form.otp.data
+        otp = form.otp.data
 
-            if not int(otp):
-                flash("OTP is a 6 digit code")
-            else:
+        try:
+            otp_int = int(otp)
+        except ValueError:
+            flash("OTP should contain only numbers", "error")
+            return render_template("passenger/verify_otp.html", form=form)
+        if len(str(otp_int)) != 6:
+            flash("OTP should be a 6-digit code", "error")
+        else:
+            phone = session.get("phone")
+            verify_otp_code = client.verify.services(
+                verify_sid
+            ).verification_checks.create(to=phone, code=otp_int)
+            if verify_otp_code.status == "approved":
                 return redirect(url_for("driver_views.home"))
-
+            else:
+                flash("Wrong OTP")
     return render_template("driver/verify_otp.html", form=form)
 
 
-@driver_auth.route("/", methods=["GET", "POST"])
-@login_required
+@driver_auth.route("/logout", methods=["GET", "POST"])
+@login_required_with_manager(driver_login_manager)
 def logout():
+    session.clear()
     logout_user()
     return redirect(url_for("driver_auth.signin"))

@@ -16,42 +16,11 @@
         {{ form.submit }}
     </form>
 
-    <h4>Drivers</h4>
-    <table>
-        <thead>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Vehicle</th>
-            <th>Phone</th>    
-        </thead>
-        <tbody>
-            {% for driver in drivers %}
-            <td>{{ driver.firstname }}</td>
-            <td>{{ driver.lastname }}</td>
-            <td>{{ driver.type }}</td>
-            <td>{{ driver.phone }}</td>
-            <td><button type="submit" id="{{driver.id}}">delete</button></td>
-            {% endfor %}
-        </tbody>
-    </table>
+    <a href="">Drivers</a>
+    <a href="">Drivers</a>
+    
 
 
-    <h4>Passengers</h4>
-    <table>
-        <thead>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Phone</th>    
-        </thead>
-        <tbody>
-            <tr>
-                {% for passenger in passengers %}
-                <td>{{ passenger.firstname }}</td>
-                <td>{{ passenger.lastname }}</td>
-                <td>{{ passenger.phone }}</td>
-                {% endfor %}
-            </tr>
-        </tbody>
-    </table>
+    
 </body>
 </html>
