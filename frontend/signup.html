@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+  <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css" /> -->
+  <link rel="stylesheet" href="signup.css" />
+  <title>signup</title>
+</head>
+<body>
+  <div class="fixed-header">
+    <!-- <div><i class="fa-sharp fa-solid fa-circle fa-2xs" style="color: #000000;"></i></div> -->
+    <div class="pad">
+      <h2>Sign up</h2>
+    </div>
+  </div>
+  <div class="main_container">
+    <div class="maindiv">
+      <form action="">
+        <div class="marg" id="input-marg">
+          <div>
+            <input type="name" name="fname" placeholder="First Name" id="fname" required />
+          </div>
+          <div>
+            <input type="name" name="lname" placeholder="Last Name" id="lname" required />
+          </div>
+        </div>
+        <div>
+          <input <input type="tel" id="phone" name="phone" placeholder="Phone Number" required />
+        </div>
+        <div class="marg">
+          <input id="password" type="password" placeholder="Password" name="password" required />
+          <i class="bi bi-eye-slash" id="togglePassword"></i>
+        </div>
+        <div class="marg" id="cb">
+          <div>
+            <input type="checkbox" value="lsRememberMe" id="rememberMe" />
+            <label id="myLabel" for="rememberMe">I want to recieve marketing infoemation and updates</label>
+          </div>
+        </div>
+        <div class="marg">
+          <input id="click" type="submit" value="SIGN UP" onclick="lsRememberMe()" />
+        </div>
+        <div id="para1">
+          <p>Already have an account? <a id="span1" href="./signin.html">Sign In</a></p>
+        </div>
+      </form>
+    </div>
+    <script src="signup.js"></script>
+  </div>
+  <div class="fixed-footer">
+    <h2>Asambe</h2>
+  </div>
+</body>
+</html>
