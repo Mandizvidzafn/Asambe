@@ -17,4 +17,5 @@ driver_views = Blueprint("driver_views", __name__, url_prefix="/driver")
 def home():
     if not current_user.is_authenticated:
         return redirect(url_for("driver_auth.signin"))
+    print(f"current user id is {current_user.id}")
     return render_template("driver/index.html", user=current_user)

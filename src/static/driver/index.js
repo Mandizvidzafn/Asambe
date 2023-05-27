@@ -1,9 +1,9 @@
 const btn = document.getElementById("close-btn");
 const nav = document.getElementById("side-nav");
 const menu = document.getElementById("home-menu");
+let userstatus = document.getElementById("status")
 
-
-
+//Event Listeners
 btn.addEventListener("click", (event) => {
     /* nav.classList.add("side-nav-animate-out"); */
     nav.style.left = "-100%";
@@ -32,7 +32,9 @@ let tile = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
+//Updating the drivers live location
 let marker, circle
+const socket = io.connect();
 
 navigator.geolocation.watchPosition(
     (position) => {
@@ -48,6 +50,12 @@ navigator.geolocation.watchPosition(
         // Add a marker at the user's initial location
         marker = L.marker([latitude, longitude]).addTo(map);
       }
+
+      // Emit the location update to the server
+      socket.emit('location_update', {
+      latitude: latitude,
+      longitude: longitude
+    });
 
       },
       (error) => {

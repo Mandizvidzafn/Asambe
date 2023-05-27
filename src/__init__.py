@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from os import path
 from flask_login import LoginManager
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 
 
 passenger_login_manager = LoginManager()
@@ -12,7 +12,7 @@ loginManager = LoginManager()
 
 db_Name = "asambe.db"
 db = SQLAlchemy()
-socketIO = SocketIO()
+socketio = SocketIO()
 
 
 def create_app():
@@ -26,7 +26,7 @@ def create_app():
     driver_login_manager.login_view = "driver_auth.signin"
     # initializations
     db.init_app(app)
-    socketIO.init_app(app)
+    socketio.init_app(app)
     passenger_login_manager.init_app(app)
     driver_login_manager.init_app(app)
 

@@ -5,7 +5,8 @@ from src import driver_login_manager
 from src.forms.driver import SigninForm, SignupForm, ForgotPasswordForm, VerifyOTPForm
 from src.models.driver import Driver
 from src.models.vehicle import Vehicle
-from src import db
+from src import db, socketio
+from flask_socketio import emit
 from flask_bcrypt import check_password_hash, generate_password_hash
 from twilio.rest import Client
 from dotenv import load_dotenv
@@ -140,3 +141,22 @@ def logout():
 
 
 # live location
+@socketio.on("location_update")
+def handle_location_update(data):
+    driver_id = current_user.id
+    latitude = data["latitude"]
+    longitude = data["longitude"]
+    print(f"latitude is {latitude}")
+    print(f"longitude is {longitude}")
+    print(f"driver id is {driver_id}")
+
+    # Update the driver's location in the database
+    driver = Driver.query.get(driver_id)
+    if driver:
+        driver.lat = latitude
+        driver.long = longitude
+        db.session.add(driver)
+        db.session.commit()
+
+    # Emit the location update to all connected clients
+    emit("location_update", data, broadcast=True)
