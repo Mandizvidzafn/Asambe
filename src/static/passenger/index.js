@@ -42,7 +42,7 @@ let tile = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
-let marker, circle
+let passengerMarker, driverMarker
 
 navigator.geolocation.watchPosition(
     (position) => {
@@ -52,11 +52,11 @@ navigator.geolocation.watchPosition(
       // Update the map's view with the user's coordinates
       map.setView([latitude, longitude], 13);
 
-      if (marker) {
-        marker.setLatLng([latitude, longitude]);
+      if (passengerMarker) {
+        passengerMarker.setLatLng([latitude, longitude]);
       } else {
         // Add a marker at the user's initial location
-        marker = L.marker([latitude, longitude]).addTo(map);
+        passengerMarker = L.marker([latitude, longitude]).addTo(map);
       }
 
       },

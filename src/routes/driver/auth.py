@@ -146,17 +146,26 @@ def handle_location_update(data):
     driver_id = current_user.id
     latitude = data["latitude"]
     longitude = data["longitude"]
-    print(f"latitude is {latitude}")
-    print(f"longitude is {longitude}")
-    print(f"driver id is {driver_id}")
 
     # Update the driver's location in the database
     driver = Driver.query.get(driver_id)
     if driver:
         driver.lat = latitude
         driver.long = longitude
-        db.session.add(driver)
         db.session.commit()
 
     # Emit the location update to all connected clients
     emit("location_update", data, broadcast=True)
+
+
+# upadte the active status
+@socketio.on("status_update")
+def handle_status_update(data):
+    driver_id = current_user.id
+    status = data["status"]
+
+    driver = Driver.query.get(driver_id)
+    if driver:
+        driver.active = status
+        db.session.commit()
+    emit("status_update", {"status": status}, broadcast=True)

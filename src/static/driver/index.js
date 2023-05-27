@@ -1,7 +1,7 @@
 const btn = document.getElementById("close-btn");
 const nav = document.getElementById("side-nav");
 const menu = document.getElementById("home-menu");
-let userstatus = document.getElementById("status")
+const driverStatus = document.getElementById("status")
 
 //Event Listeners
 btn.addEventListener("click", (event) => {
@@ -22,8 +22,18 @@ menu.addEventListener("click", (event) => {
 
 })
 
+// Add an event listener to the checkbox
+driverStatus.addEventListener("change", () => {
+  // Get the status value (true or false) from the checkbox
+  const status = driverStatus.checked;
+
+  // Emit the status update to the server
+  socket.emit("status_update", { status });
+});
 
 
+
+//map functionalities
 let map = L.map('map').setView([0, 0], 13);
 
 let tile = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -41,13 +51,13 @@ navigator.geolocation.watchPosition(
       // Retrieve latitude and longitude from the position object
       const { latitude, longitude, accuracy } = position.coords;
       
-      // Update the map's view with the user's coordinates
+      // Update the map's view with the drivers's coordinates
       map.setView([latitude, longitude], 13);
 
       if (marker) {
         marker.setLatLng([latitude, longitude]);
       } else {
-        // Add a marker at the user's initial location
+        // Add a marker at the driver's initial location
         marker = L.marker([latitude, longitude]).addTo(map);
       }
 
@@ -64,12 +74,5 @@ navigator.geolocation.watchPosition(
       }
   );
 
-userstatus.addEventListener("change", (event) => {
-    if (event.target.checked) {
-        passenger();
-      }
-})
 
-function passenger() {
-      let marker = L.marker([-33.9608, 25.6022]).addTo(map);
-}
+
