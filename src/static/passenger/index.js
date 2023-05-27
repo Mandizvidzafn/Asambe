@@ -6,7 +6,7 @@ const profile = document.getElementById("home-profile");
 const minus = document.getElementById("minus");
 const bottom = document.getElementById("bottom")
 let userstatus = document.getElementById("status")
-
+const driverMarkers = {};
 
 btn.addEventListener("click", (event) => {
     /* nav.classList.add("side-nav-animate-out"); */
@@ -42,7 +42,7 @@ let tile = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
-let passengerMarker, driverMarker
+let passengerMarker
 
 navigator.geolocation.watchPosition(
     (position) => {
@@ -66,12 +66,19 @@ navigator.geolocation.watchPosition(
       }
   );
 
-userstatus.addEventListener("change", (event) => {
-    if (event.target.checked) {
-        passenger();
-      }
-})
 
-function passenger() {
-      let marker = L.marker([-33.9608, 25.6022]).addTo(map);
-}
+const socket = io.connect();
+ 
+socket.on("driver_location_update", (data) => {
+  const { driver_id, latitude, longitude, name } = data;
+
+  if (driverMarkers[driver_id]) {
+    driverMarkers[driver_id].setLatLng([latitude, longitude]);
+  } else {
+    const marker = L.marker([latitude, longitude]).addTo(map);
+    marker.bindPopup(`Driver Name: ${name}`).openPopup();
+    driverMarkers[driver_id] = marker;
+  }
+});
+
+socket.emit("active_drivers_location");
