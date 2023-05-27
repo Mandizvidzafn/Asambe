@@ -54,7 +54,9 @@ def signup():
 
             db.session.add(new_user)
             db.session.commit()
+            print(new_user)
             session["phone"] = phone
+            print(session.get("phone"))
             send_otp = client.verify.services(verify_sid).verifications.create(
                 to=phone, channel="sms"
             )
@@ -135,3 +137,6 @@ def logout():
     session.clear()
     logout_user()
     return redirect(url_for("driver_auth.signin"))
+
+
+# live location

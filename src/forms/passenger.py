@@ -24,7 +24,7 @@ class SignupForm(FlaskForm):
     lastname = StringField(
         "Last Name", validators=[InputRequired(), Length(min=2, max=40)]
     )
-    phone = TelField("Phone", validators=[InputRequired()])
+    phone = StringField("Phone", validators=[InputRequired()])
     password = PasswordField("Password", validators=[DataRequired(), Length(min=7)])
     confirm_password = PasswordField(
         "Confirm Password",
@@ -43,8 +43,9 @@ class SignupForm(FlaskForm):
 
 
 class SigninForm(FlaskForm):
-    phone = TelField("Phone", validators=[InputRequired()])
+    phone = StringField("Phone", validators=[InputRequired()])
     password = PasswordField("Password", validators=[InputRequired(), Length(min=7)])
+    remember_me = BooleanField("remember me", default=True)
     submit = SubmitField("Sign in")
 
 

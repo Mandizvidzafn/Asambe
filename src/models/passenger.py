@@ -10,6 +10,8 @@ class Passenger(db.Model, BaseModel, UserMixin):
     phone = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
     status = db.Column(db.Boolean(), default=False)
+    lat = db.Column(db.String(), nullable=True)
+    long = db.Column(db.String(), nullable=True)
     locationId = db.Column(db.Integer(), db.ForeignKey("location.id"))
     newsletter = db.Column(db.Boolean(), default=False)
     number_visibility = db.Column(db.Boolean(), default=False)
