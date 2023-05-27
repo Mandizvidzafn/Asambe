@@ -39,4 +39,4 @@ def send_drivers_location():
             "name": name,
         }
 
-        emit("driver_location_update", data)
+        emit("driver_location_update", data, broadcast=True)

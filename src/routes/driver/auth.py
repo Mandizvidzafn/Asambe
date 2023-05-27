@@ -154,6 +154,22 @@ def handle_location_update(data):
         driver.long = longitude
         db.session.commit()
 
+    drivers = Driver.query.filter_by(active=True).all()
+    for driver in drivers:
+        if driver.active == True:
+            driver_id = driver.id
+            latitude = driver.lat
+            longitude = driver.long
+            name = f"{driver.firstname} {driver.lastname}"
+
+            data = {
+                "driver_id": driver_id,
+                "latitude": latitude,
+                "longitude": longitude,
+                "name": name,
+            }
+            emit("driver_location_update", data, broadcast=True)
+
     # Emit the location update to all connected clients
     emit("location_update", data, broadcast=True)
 
