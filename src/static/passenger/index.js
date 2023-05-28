@@ -70,7 +70,7 @@ navigator.geolocation.watchPosition(
 const socket = io.connect();
  
 socket.on("driver_location_update", (data) => {
-  const { driver_id, latitude, longitude, name } = data;
+  const { driver_id, latitude, longitude, name, active } = data;
 
   if (driverMarkers[driver_id]) {
     driverMarkers[driver_id].setLatLng([latitude, longitude]);
@@ -79,6 +79,7 @@ socket.on("driver_location_update", (data) => {
     marker.bindPopup(`Driver Name: ${name}`).openPopup();
     driverMarkers[driver_id] = marker;
   }
+
 });
 
 socket.emit("active_drivers_location");

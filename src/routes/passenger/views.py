@@ -30,6 +30,7 @@ def send_drivers_location():
         driver_id = driver.id
         latitude = driver.lat
         longitude = driver.long
+        active = driver.active
         name = f"{driver.firstname} {driver.lastname}"
 
         data = {
@@ -37,6 +38,7 @@ def send_drivers_location():
             "latitude": latitude,
             "longitude": longitude,
             "name": name,
+            "active": active,
         }
 
-        emit("driver_location_update", data, broadcast=True)
+    emit("driver_location_update", data, broadcast=True)

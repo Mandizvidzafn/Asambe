@@ -29,7 +29,11 @@
 
             <div class="status">
                 <label class="toggle-switch">
-                    <input type="checkbox" id="status">
+                    {% if user.active == True %}
+                        <input type="checkbox" id="status" checked>
+                    {% else %}
+                        <input type="checkbox" id="status">
+                    {% endif %}
                     <span class="slider"></span>
                   </label>
                 <p>I want to go</p>
