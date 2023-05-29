@@ -14,6 +14,7 @@ from flask_bcrypt import check_password_hash, generate_password_hash
 from twilio.rest import Client
 from dotenv import load_dotenv
 import os
+from ...models.engine import storage
 
 passenger_auth = Blueprint("passenger_auth", __name__, url_prefix="/passenger")
 
@@ -42,7 +43,7 @@ def signup():
         password = form.password.data
         hashed_password = generate_password_hash(password, rounds=12)
 
-        user = Passenger.query.filter_by(phone=phone).first()
+        user = storage.get_filtered_item("passenger", "phone", phone)
         if user:
             form.phone.errors.append("Phone number exists")
         else:
@@ -54,11 +55,10 @@ def signup():
                 password=hashed_password,
             )
 
-            db.session.add(new_user)
-            db.session.commit()
-            print(new_user)
+            storage.create(new_user)
+            storage.save()
+
             session["phone"] = phone
-            print(session.get("phone"))
             send_otp = client.verify.services(verify_sid).verifications.create(
                 to=phone, channel="sms"
             )
@@ -80,7 +80,7 @@ def signin():
         remember_me = form.remember_me.data
         print(remember_me)
 
-        existing_passenger = Passenger.query.filter_by(phone=phone).first()
+        existing_passenger = storage.get_filtered_item("passenger", "phone", phone)
         if existing_passenger:
             if check_password_hash(existing_passenger.password, password):
                 login_user(existing_passenger, remember=True)

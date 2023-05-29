@@ -7,6 +7,7 @@ from flask_socketio import emit
 from flask_login import current_user, user_logged_in
 from ..multiple_login_required import login_required_with_manager
 from src import passenger_login_manager
+from ...models.engine import storage
 
 
 passenger_views = Blueprint("passenger_views", __name__, url_prefix="/passenger")
@@ -24,21 +25,23 @@ def home():
 # show active drivers on map
 @socketio.on("active_drivers_location")
 def send_drivers_location():
-    drivers = Driver.query.filter_by(active=True).all()
+    drivers = storage.get_all_filtered_item("driver", "active", True)
+
     print("Sending drivers' locations")
-    for driver in drivers:
-        driver_id = driver.id
-        latitude = driver.lat
-        longitude = driver.long
-        active = driver.active
-        name = f"{driver.firstname} {driver.lastname}"
+    if drivers is not None:
+        for driver in drivers:
+            driver_id = driver.id
+            latitude = driver.lat
+            longitude = driver.long
+            active = driver.active
+            name = f"{driver.firstname} {driver.lastname}"
 
-        data = {
-            "driver_id": driver_id,
-            "latitude": latitude,
-            "longitude": longitude,
-            "name": name,
-            "active": active,
-        }
+            data = {
+                "active": active,
+                "name": name,
+                "latitude": latitude,
+                "longitude": longitude,
+                "driver_id": driver_id,
+            }
 
-    emit("driver_location_update", data, broadcast=True)
+            emit("driver_location_update", data, broadcast=True)

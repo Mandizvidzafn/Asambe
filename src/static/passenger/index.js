@@ -70,16 +70,32 @@ navigator.geolocation.watchPosition(
 const socket = io.connect();
  
 socket.on("driver_location_update", (data) => {
-  const { driver_id, latitude, longitude, name, active } = data;
+  const { driver_id, latitude, longitude, name, location } = data;
 
   if (driverMarkers[driver_id]) {
     driverMarkers[driver_id].setLatLng([latitude, longitude]);
   } else {
     const marker = L.marker([latitude, longitude]).addTo(map);
-    marker.bindPopup(`Driver Name: ${name}`).openPopup();
+    if (location === undefined){
+      marker.bindPopup(`Driver Name: ${name} is Active`).openPopup();
+    }else{
+      marker.bindPopup(`Driver Name: ${name} is in ${location}`).openPopup();
+    }
     driverMarkers[driver_id] = marker;
   }
 
 });
+
+socket.on("remove_inactive_drivers", (data) => {
+  const { driver_ids } = data;
+
+  for (const driver_id in driverMarkers) {
+    if (driverMarkers.hasOwnProperty(driver_id) && !driver_ids.includes(driver_id)) {
+      map.removeLayer(driverMarkers[driver_id]);
+      delete driverMarkers[driver_id];
+    }
+  }
+});
+
 
 socket.emit("active_drivers_location");

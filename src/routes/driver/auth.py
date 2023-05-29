@@ -11,6 +11,8 @@ from flask_bcrypt import check_password_hash, generate_password_hash
 from twilio.rest import Client
 from dotenv import load_dotenv
 import os
+from ..get_location_name import location_name
+from ...models.engine import storage
 
 driver_auth = Blueprint("driver_auth", __name__, url_prefix="/driver")
 
@@ -36,11 +38,11 @@ def signup():
         newsletter = form.newsletter.data
         password = form.password.data
 
-        vehicle_id = Vehicle.query.get(vehicle_type)
+        vehicle_id = storage.get_item("vehicle", vehicle_type)
 
         hashed_password = generate_password_hash(password, rounds=12)
 
-        user = Driver.query.filter_by(phone=phone).first()
+        user = storage.get_filtered_item("driver", "phone", phone)
         if user:
             form.phone.errors.append("Phone number exists")
         else:
@@ -53,11 +55,9 @@ def signup():
                 password=hashed_password,
             )
 
-            db.session.add(new_user)
-            db.session.commit()
-            print(new_user)
+            storage.create(new_user)
+            storage.save()
             session["phone"] = phone
-            print(session.get("phone"))
             send_otp = client.verify.services(verify_sid).verifications.create(
                 to=phone, channel="sms"
             )
@@ -77,9 +77,10 @@ def signin():
         phone = form.phone.data
         password = form.password.data
 
-        existing_driver = Driver.query.filter_by(phone=phone).first()
+        existing_driver = storage.get_filtered_item("driver", "phone", phone)
         if existing_driver:
             if check_password_hash(existing_driver.password, password):
+                session["phone"] = phone
                 login_user(existing_driver, remember=True)
                 return redirect(url_for("driver_views.home"))
             else:
@@ -91,6 +92,9 @@ def signin():
 
 @driver_auth.route("/retrieve-password", methods=["GET", "POST"])
 def forgot_password():
+    if current_user.is_authenticated:
+        return redirect(url_for("driver_views.home"))
+
     form = ForgotPasswordForm()
 
     if form.validate_on_submit():
@@ -108,6 +112,9 @@ def forgot_password():
 
 @driver_auth.route("/verify_otp", methods=["GET", "POST"])
 def verify_otp():
+    if current_user.is_authenticated:
+        return redirect(url_for("driver_views.home"))
+
     form = VerifyOTPForm()
 
     if form.validate_on_submit():
@@ -126,6 +133,8 @@ def verify_otp():
                 verify_sid
             ).verification_checks.create(to=phone, code=otp_int)
             if verify_otp_code.status == "approved":
+                existing_driver = storage.get_filtered_item("driver", "phone", phone)
+                login_user(existing_driver, remember=True)
                 return redirect(url_for("driver_views.home"))
             else:
                 flash("Wrong OTP")
@@ -148,30 +157,33 @@ def handle_location_update(data):
     longitude = data["longitude"]
 
     # Update the driver's location in the database
-    driver = Driver.query.get(driver_id)
+    driver = storage.get_item("driver", driver_id)
     if driver:
         driver.lat = latitude
         driver.long = longitude
         db.session.commit()
 
-    drivers = Driver.query.filter_by(active=True).all()
-    for driver in drivers:
-        if driver.active == True:
-            driver_id = driver.id
-            latitude = driver.lat
-            longitude = driver.long
-            name = f"{driver.firstname} {driver.lastname}"
+    drivers = storage.get_all_filtered_item("driver", "active", True)
+    if drivers is not None:
+        for driver in drivers:
+            if driver.active == True:
+                driver_id = driver.id
+                latitude = driver.lat
+                longitude = driver.long
+                name = f"{driver.firstname} {driver.lastname}"
+                location = location_name(latitude, longitude)
 
-            data = {
-                "driver_id": driver_id,
-                "latitude": latitude,
-                "longitude": longitude,
-                "name": name,
-            }
-            emit("driver_location_update", data, broadcast=True)
+                data = {
+                    "driver_id": driver_id,
+                    "latitude": latitude,
+                    "longitude": longitude,
+                    "name": name,
+                    "location": location,
+                }
+                emit("driver_location_update", data, broadcast=True)
 
-    # Emit the location update to all connected clients
-    emit("location_update", data, broadcast=True)
+            # Emit the location update to all connected clients
+            emit("location_update", data, broadcast=True)
 
 
 # upadte the active status
@@ -180,8 +192,13 @@ def handle_status_update(data):
     driver_id = current_user.id
     status = data["status"]
 
-    driver = Driver.query.get(driver_id)
+    driver = storage.get_item("driver", driver_id)
     if driver:
+        print("updating driver status")
         driver.active = status
         db.session.commit()
+
+        if not status:
+            emit("remove_inactive_drivers", {"driver_ids": [driver_id]}, broadcast=True)
+
     emit("status_update", {"status": status}, broadcast=True)
