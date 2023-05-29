@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 .main_container {
   display: flex;
   justify-content: center;
@@ -11,21 +12,27 @@
   align-items: center;
   width: 50%;
 }
-.fixed-header, .fixed-footer{
+
+.fixed-header,
+.fixed-footer {
   width: 100%;
-  position: fixed;        
-  background: rgb(255, 255, 255);
+  position: fixed;
+  background: rgb(254, 252, 252);
   padding: 10px 0;
   color: rgb(0, 0, 0);
   text-align: center;
-  
+  font-family: "Manrope";
+
 }
-.fixed-header{
+
+.fixed-header {
   top: 0;
 }
-.fixed-footer{
+
+.fixed-footer {
   bottom: 0;
-}  
+}
+
 h2 {
   font-family: "Manrope";
   font-style: normal;
@@ -34,7 +41,9 @@ h2 {
   line-height: 18px;
   color: #000000;
 }
-p, #span2 {
+
+p,
+#span2 {
   font-family: "Manrope";
   font-style: normal;
   font-weight: 400;
@@ -42,6 +51,7 @@ p, #span2 {
   line-height: 10px;
   color: #000000;
 }
+
 .containerdiv {
   font-family: "Manrope";
   margin-left: 100px;
@@ -49,10 +59,12 @@ p, #span2 {
   margin-bottom: 279px;
   margin-top: 93px;
 }
+
 #span1 {
   text-decoration-line: underline;
   color: #1348d0;
 }
+
 /* .pad {
   margin-bottom: 24px;
   text-align: center;
@@ -63,17 +75,19 @@ p, #span2 {
   padding-top: 18px;
   height: 24px;
 }
+
 #para1 {
-  width: 680px;
+  width: 600px;
   height: 60px;
   text-align: center;
   padding-top: 14px;
 }
+
 input {
   background-color: #ffffff;
   border: 1px solid #000000;
   border-radius: 3px;
-  width: 680px;
+  width: 600px;
   height: 60px;
   box-sizing: border-box;
   font-style: normal;
@@ -81,27 +95,33 @@ input {
   font-size: 16px;
   line-height: 24px;
 }
+
 input:focus {
   color: #bcbcbc;
   outline: none;
-  border:#000000 2px solid;
+  border: #000000 2px solid;
 }
+
 #togglePassword {
   margin-left: -30px;
 }
+
 .marg {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 #input-marg {
   display: flex;
   justify-content: space-between;
 }
+
 #input-marg input {
-  width: 335px;
+  width: 295px;
 }
+
 #cb {
-  width: 680px;
+  width: 600px;
   height: 60px;
   display: flex;
   justify-content: space-between;
@@ -111,21 +131,25 @@ input:focus {
   font-size: 12px;
   line-height: 24px;
 }
+
 #rememberMe {
   width: 32px;
   height: 32px;
   border-radius: 10px !important;
 }
+
 #click {
   background-color: #000000;
   border: none;
-  width: 680px;
+  width: 600px;
   transition-duration: 0.4s;
-  color:#ffffff
+  color: #ffffff
 }
+
 #click:hover {
-  background-color: #2d2d2d;
+  background-color: #414141;
 }
+
 .flex1 {
   display: flex;
   justify-content: space-between;
@@ -137,7 +161,32 @@ input:focus {
   justify-content: space-between;
   width: 300px;
 }
+
 #span2 {
   text-decoration: underline;
   color: #000000;
+}
+
+/* Forgot password style */
+#click2 {
+  border-radius: 30px;
+  background-color: #000000;
+  border: none;
+  width: 600px;
+  transition-duration: 0.4s;
+  color: #ffffff;
+  height: 60px;
+  box-sizing: border-box;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+#click2:hover {
+  background-color: #414141;
+}
+
+.space2 {
+  margin-bottom: 50px;
 }
