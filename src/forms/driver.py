@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.validators import InputRequired, Length
+from wtforms.validators import InputRequired, Length, DataRequired, EqualTo
 from wtforms import (
     BooleanField,
     StringField,
@@ -7,6 +7,7 @@ from wtforms import (
     PasswordField,
     TelField,
     SubmitField,
+    FileField,
 )
 
 
@@ -21,7 +22,12 @@ class SignupForm(FlaskForm):
         "Password", validators=[InputRequired(), Length(min=2, max=40)]
     )
     confirm_password = PasswordField(
-        "Confirm Password", validators=[InputRequired(), Length(min=2, max=40)]
+        "Confirm Password",
+        validators=[
+            InputRequired(),
+            Length(min=2, max=40),
+            EqualTo("password", message="Passwords must match"),
+        ],
     )
     phone = TelField("Phone", validators=[InputRequired()])
     vehicle_choices = [
@@ -51,3 +57,26 @@ class ForgotPasswordForm(FlaskForm):
 class VerifyOTPForm(FlaskForm):
     otp = StringField("Enter OTP", validators=[InputRequired(), Length(min=6, max=6)])
     submit = SubmitField("Verify")
+
+
+class UpdateForm(FlaskForm):
+    firstname = StringField(
+        "First Name", validators=[InputRequired(), Length(min=2, max=40)]
+    )
+    lastname = StringField(
+        "Last Name", validators=[InputRequired(), Length(min=2, max=40)]
+    )
+    phone = TelField("Phone", validators=[InputRequired()])
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=7)])
+    confirm_password = PasswordField(
+        "Confirm Password",
+        validators=[
+            DataRequired(),
+            Length(min=7),
+            EqualTo("password", message="Passwords must match"),
+        ],
+    )
+
+    profile_image = FileField("Change profile pic")
+
+    submit = SubmitField("Update information")

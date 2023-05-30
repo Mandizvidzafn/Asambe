@@ -6,6 +6,7 @@ from wtforms import (
     SubmitField,
     BooleanField,
     IntegerField,
+    FileField,
 )
 from wtforms.validators import (
     EqualTo,
@@ -57,3 +58,26 @@ class ForgotPasswordForm(FlaskForm):
 class VerifyOTPForm(FlaskForm):
     otp = StringField("Enter OTP", validators=[InputRequired(), Length(min=6, max=6)])
     submit = SubmitField("Verify")
+
+
+class UpdateForm(FlaskForm):
+    firstname = StringField(
+        "First Name", validators=[InputRequired(), Length(min=2, max=40)]
+    )
+    lastname = StringField(
+        "Last Name", validators=[InputRequired(), Length(min=2, max=40)]
+    )
+    phone = StringField("Phone", validators=[InputRequired()])
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=7)])
+    confirm_password = PasswordField(
+        "Confirm Password",
+        validators=[
+            DataRequired(),
+            Length(min=7),
+            EqualTo("password", message="Passwords must match"),
+        ],
+    )
+
+    profile_image = FileField("Change profile pic")
+
+    submit = SubmitField("Update information")

@@ -1,10 +1,10 @@
 """views.py"""
 from flask import redirect, render_template, request, Blueprint, url_for
-from src.forms.passenger import SignupForm, SigninForm
+from src.forms.passenger import SignupForm, SigninForm, UpdateForm
 from src.models.driver import Driver
 from src import db, socketio
 from flask_socketio import emit
-from flask_login import current_user, user_logged_in
+from flask_login import current_user
 from ..multiple_login_required import login_required_with_manager
 from src import passenger_login_manager
 from ...models.engine import storage
@@ -22,7 +22,18 @@ def home():
     return render_template("passenger/index.html", user=current_user)
 
 
-# show active drivers on map
+@passenger_views.route("/profile", methods=["GET", "POST"])
+@login_required_with_manager(passenger_login_manager)
+def profile():
+    form = UpdateForm()
+    if request.method == "GET":
+        form.firstname.data = current_user.firstname
+        form.lastname.data = current_user.lastname
+        form.phone.data = current_user.phone
+    return render_template("passenger/profile.html", user=current_user, form=form)
+
+
+# show active drivers on passenger map
 @socketio.on("active_drivers_location")
 def send_drivers_location():
     drivers = storage.get_all_filtered_item("driver", "active", True)
