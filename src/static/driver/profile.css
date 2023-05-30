@@ -211,30 +211,6 @@ input:checked + .slider:before {
     max-height: 60px;
 }
 
-
-
-.bottom {
-    display: none;
-    flex-direction: column;
-}
-
-.bottom-active {
-    display: flex;
-}
-
-#search {
-    align-self: center;
-    width: 60%;
-    height: 45px;
-    margin-top: 15px;
-    border-radius: 30px;
-    border: 0;
-    color: #fff;
-    background-color: #000;
-    font-size: 20px;
-}
-
-
 .trans {
     position: relative;
     width: 60px;
