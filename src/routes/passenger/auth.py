@@ -177,7 +177,6 @@ def handle_location_update(data):
                 longitude = passenger.long
                 name = f"{passenger.firstname} {passenger.lastname}"
                 location = location_name(latitude, longitude)
-
                 data = {
                     "passenger_id": passenger_id,
                     "latitude": latitude,

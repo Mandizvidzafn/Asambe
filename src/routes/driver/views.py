@@ -35,7 +35,7 @@ def profile():
 # show active passengers on driver map
 @socketio.on("active_passengers_location")
 def send_passengers_location():
-    passengers = storage.get_all_filtered_item("passengers", "status", True)
+    passengers = storage.get_all_filtered_item("passenger", "status", True)
 
     print("Sending passengers' locations")
     if passengers is not None:
@@ -43,8 +43,9 @@ def send_passengers_location():
             passenger_id = passenger.id
             latitude = passenger.lat
             longitude = passenger.long
-            active = passenger.active
+            active = passenger.status
             name = f"{passenger.firstname} {passenger.lastname}"
+            print(f"passenger name: {passenger.firstname}")
 
             data = {
                 "active": active,
