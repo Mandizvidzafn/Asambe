@@ -5,6 +5,7 @@ from src import db
 
 
 class Location(db.Model, BaseModel):
+    id = db.Column(db.Integer(), primary_key=True, nullable=False)
     name = db.Column(db.String(40), nullable=False)
     postalcode = db.Column(db.String(40), nullable=False)
     town = db.Column(db.String(45), nullable=False)

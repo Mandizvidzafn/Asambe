@@ -9,12 +9,10 @@
 <body>
     <form action="" method="post">
         {{ form.csrf_token }}
+
         <ul>
-            <img src="{{url_for('static', filename='lock.svg')}}"></img>
-            <h3>Driver</h3>
-            <h3>Sign in</h3>
             <li>
-                {{form.phone.label}} 
+                {{form.phone.label}}
                 {{form.phone}}
             </li>
             <li>
@@ -22,15 +20,9 @@
                 {{form.password}}
             </li>
             <li>
-                {{ form.submit }}
+                {{form.submit}}
             </li>
-            <a href="{{url_for('driver_auth.forgot_password')}}"><h5>Forgot password</h5></a>
-            <a href="{{url_for('driver_auth.signup')}}"><h5>Don't have an account? Sign Up</h5></a>
-            <h1>Asambe</h1>
-            
         </ul>
-
     </form>
-
 </body>
 </html>

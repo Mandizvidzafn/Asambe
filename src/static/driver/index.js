@@ -2,6 +2,7 @@ const btn = document.getElementById("close-btn");
 const nav = document.getElementById("side-nav");
 const menu = document.getElementById("home-menu");
 const driverStatus = document.getElementById("status")
+const passengerMarkers = {};
 
 //Event Listeners
 btn.addEventListener("click", (event) => {
@@ -73,6 +74,38 @@ navigator.geolocation.watchPosition(
         console.error('Error getting geolocation:', error);
       }
   );
+
+
+socket.on("passenger_location_update", (data) => {
+  const { passenger_id, latitude, longitude, name, location } = data;
+
+  if (passengerMarkers[passenger_id]) {
+    driverMarkers[driver_id].setLatLng([latitude, longitude]);
+  } else {
+    const marker = L.marker([latitude, longitude]).addTo(map);
+    if (location === undefined){
+      marker.bindPopup(`Passenger Name: ${name} is Active`).openPopup();
+    }else{
+      marker.bindPopup(`Passenger Name: ${name} is in ${location}`).openPopup();
+    }
+    passengerMarkers[passenger_id] = marker;
+  }
+
+});
+
+socket.on("remove_inactive_passengers", (data) => {
+  const { passenger_ids } = data;
+
+  for (const passenger_id in passengerMarkers) {
+    if (passengerMarkers.hasOwnProperty(passenger_id) && !passenger_ids.includes(passenger_id)) {
+      map.removeLayer(passengerMarkers[passenger_id]);
+      delete passengerMarkers[passenger_id];
+    }
+  }
+});
+
+
+socket.emit("active_passengers_location");
 
 
 

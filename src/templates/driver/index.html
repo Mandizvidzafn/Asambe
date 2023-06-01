@@ -36,7 +36,7 @@
                     {% endif %}
                     <span class="slider"></span>
                   </label>
-                <p>I want to go</p>
+                <p>Active</p>
             </div>
             
 
@@ -75,6 +75,8 @@
                     <buttton class="icons"><i class="fa-solid fa-user"></i></buttton>
                     <p>Profile</p>
                 </li>
+                <a href="{{url_for('auth.logout')}}">logout</a>
+                <p>{{user.phone}}</p>
             </ul>
         </nav>
     </div>

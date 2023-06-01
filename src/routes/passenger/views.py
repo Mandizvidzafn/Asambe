@@ -1,12 +1,11 @@
 """views.py"""
-from flask import redirect, render_template, request, Blueprint, url_for
+from flask import redirect, render_template, request, Blueprint, url_for, session
 from src.forms.passenger import SignupForm, SigninForm, UpdateForm
 from src.models.driver import Driver
 from src import db, socketio
 from flask_socketio import emit
-from flask_login import current_user
+from flask_login import current_user, login_required
 from ..multiple_login_required import login_required_with_manager
-from src import passenger_login_manager
 from ...models.engine import storage
 
 
@@ -15,15 +14,15 @@ passenger_views = Blueprint("passenger_views", __name__, url_prefix="/passenger"
 
 @passenger_views.route("/")
 @passenger_views.route("/home", methods=["GET", "POST"])
-@login_required_with_manager(passenger_login_manager)
+@login_required
 def home():
-    if not current_user.is_authenticated:
-        return redirect(url_for("passenger_auth.signin"))
+    if current_user.role == "driver":
+        return redirect(url_for("driver_views.home"))
     return render_template("passenger/index.html", user=current_user)
 
 
 @passenger_views.route("/profile", methods=["GET", "POST"])
-@login_required_with_manager(passenger_login_manager)
+@login_required
 def profile():
     form = UpdateForm()
     if request.method == "GET":

@@ -5,8 +5,18 @@ const menu = document.getElementById("home-menu");
 const profile = document.getElementById("home-profile");
 const minus = document.getElementById("minus");
 const bottom = document.getElementById("bottom")
-let userstatus = document.getElementById("status")
+let passengerStatus = document.getElementById("status")
 const driverMarkers = {};
+
+
+// Add an event listener to the checkbox
+passengerStatus.addEventListener("change", () => {
+  // Get the status value (true or false) from the checkbox
+  const status = passengerStatus.checked;
+
+  // Emit the status update to the server
+  socket.emit("passenger_status_update", { status });
+});
 
 btn.addEventListener("click", (event) => {
     /* nav.classList.add("side-nav-animate-out"); */
@@ -42,22 +52,29 @@ let tile = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
-let passengerMarker
+//Updating the drivers live location
+let marker, circle
 
 navigator.geolocation.watchPosition(
     (position) => {
       // Retrieve latitude and longitude from the position object
       const { latitude, longitude, accuracy } = position.coords;
       
-      // Update the map's view with the user's coordinates
+      // Update the map's view with the drivers's coordinates
       map.setView([latitude, longitude], 13);
 
-      if (passengerMarker) {
-        passengerMarker.setLatLng([latitude, longitude]);
+      if (marker) {
+        marker.setLatLng([latitude, longitude]);
       } else {
-        // Add a marker at the user's initial location
-        passengerMarker = L.marker([latitude, longitude]).addTo(map);
+        // Add a marker at the driver's initial location
+        marker = L.marker([latitude, longitude]).addTo(map);
       }
+
+      // Emit the location update to the server
+      socket.emit('passenger_location_update', {
+      latitude: latitude,
+      longitude: longitude
+    });
 
       },
       (error) => {

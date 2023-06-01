@@ -1,7 +1,6 @@
 from flask import Blueprint, redirect, render_template, flash, url_for, session
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 from ..multiple_login_required import login_required_with_manager
-from src import driver_login_manager
 from src.forms.driver import SigninForm, SignupForm, ForgotPasswordForm, VerifyOTPForm
 from src.models.driver import Driver
 from src.models.vehicle import Vehicle
@@ -13,6 +12,7 @@ from dotenv import load_dotenv
 import os
 from ..get_location_name import location_name
 from ...models.engine import storage
+from ..generate_ids import generate_driver_id
 
 driver_auth = Blueprint("driver_auth", __name__, url_prefix="/driver")
 
@@ -47,6 +47,7 @@ def signup():
             form.phone.errors.append("Phone number exists")
         else:
             new_user = Driver(
+                id=generate_driver_id(),
                 lastname=lastname,
                 firstname=firstname,
                 phone=phone,
@@ -66,7 +67,7 @@ def signup():
     return render_template("driver/signup.html", form=form)
 
 
-@driver_auth.route("/signin", methods=["GET", "POST"])
+""" @driver_auth.route("/signin", methods=["GET", "POST"])
 def signin():
     if current_user.is_authenticated:
         return redirect(url_for("driver_views.home"))
@@ -79,15 +80,15 @@ def signin():
 
         existing_driver = storage.get_filtered_item("driver", "phone", phone)
         if existing_driver:
+            print(existing_driver.phone)
             if check_password_hash(existing_driver.password, password):
-                session["phone"] = phone
-                login_user(existing_driver, remember=True)
+                login_user(existing_driver)
                 return redirect(url_for("driver_views.home"))
             else:
                 flash("incorrect phone or password")
         else:
             flash("driver doesn't exist")
-    return render_template("driver/signin.html", form=form)
+    return render_template("driver/signin.html", form=form) """
 
 
 @driver_auth.route("/retrieve-password", methods=["GET", "POST"])
@@ -133,8 +134,9 @@ def verify_otp():
                 verify_sid
             ).verification_checks.create(to=phone, code=otp_int)
             if verify_otp_code.status == "approved":
+                session.clear()
                 existing_driver = storage.get_filtered_item("driver", "phone", phone)
-                login_user(existing_driver, remember=True)
+                login_user(existing_driver)
                 return redirect(url_for("driver_views.home"))
             else:
                 flash("Wrong OTP")
@@ -142,7 +144,7 @@ def verify_otp():
 
 
 @driver_auth.route("/logout", methods=["GET", "POST"])
-@login_required_with_manager(driver_login_manager)
+@login_required
 def logout():
     session.clear()
     logout_user()

@@ -86,9 +86,13 @@
 
             <div class="status">
                 <label class="toggle-switch">
-                    <input type="checkbox" id="status">
+                    {% if user.status == True %}
+                        <input type="checkbox" id="status" checked>
+                    {% else %}
+                        <input type="checkbox" id="status">
+                    {% endif %}
                     <span class="slider"></span>
-                  </label>
+                </label>
                 <p>I want to go</p>
             </div>
             
@@ -128,6 +132,8 @@
                     <buttton class="icons"><i class="fa-solid fa-user"></i></buttton>
                     <p>Profile</p>
                 </li>
+                <a href="{{url_for('auth.logout')}}">logout</a>
+                 <p>{{user.phone}}</p>
             </ul>
         </nav>
     </div>
