@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='driver/profile.css')}}">
+    <script defer src="{{ url_for('static', filename='driver/profile.js')}}"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn" id="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
+            <h1>My profile</h1>
+            <button class="delete-account-btn"><i class="fa-solid fa-trash"></i></button>
+        </header>
+        <main>
+            <section class="left">
+                <div class="left-top">
+                    <img src="{{url_for('static', filename='default.jpg')}}" alt="">
+                    
+                    <p class="fullname">{{user.firstname}} {{user.lastname}} </p>
+                    <p class="phone"> +27 {{ user.phone }} 000 00</p>
+                    <div class="location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Wakanda</p>
+                    </div>
+                    <div class="status">
+                        <label class="toggle-switch">
+                            {% if user.active == True %}
+                                <input type="checkbox" id="status" checked>
+                            {% else %}
+                                <input type="checkbox" id="status">
+                            {% endif %}
+                            <span class="slider"></span>
+                          </label>
+                        <p>Active</p>
+                    </div>
+                </div>
+                <div class="left-bottom">
+                    <h2>Transport type</h2>
+                    <div class="trans-type">
+                        <div class="trans">
+                            <input type="radio" class="trans-type-icons" name="bus" id="bus">
+                            <div class="radio-tile">
+                                <i class="fa-solid fa-bus"></i>
+                                <label for="bus"></label>
+                            </div>
+                            <!-- <span>bus</span> -->
+                        </div>
+                        <div class="trans">
+                            <input type="radio" class="trans-type-icons" name="quantuam" id="quantuam" checked>
+                            <div class="radio-tile">
+                                <i class="fa-solid fa-van-shuttle"></i>
+                                <label for="quantuam"></label>
+                            </div>
+                            <!-- <span>quantuam</span> -->
+                        </div>
+                        <div class="trans">
+                            <input type="radio" class="trans-type-icons" name="quza" id="quza">
+                            <div class="radio-tile">
+                                <i class="fa-solid fa-truck"></i>
+                                <label for="quza"></label>
+                            </div>
+                            <!-- <span>quza</span> -->
+
+                        </div>
+                        <div class="trans">
+                            <input type="radio" class="trans-type-icons" name="van" id="van">
+                            <div class="radio-tile">
+                                <i class="fa-solid fa-truck-front"></i>
+                                <label for="van"></label>
+                            </div>
+                            <!-- <span>van</span> -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="right">
+                <h2>Edit your profile</h2>
+                <form action="" method="post">
+                    <div class="form-container">
+                        <div class="form-group">
+                            <div class="form-group-items">
+                                {{form.firstname.label(class="labels")}}
+                                {{form.firstname(class="non-btn grouped")}}
+                            </div>
+                            <div class="form-group-items">
+                               {{form.lastname.label(class="labels")}}
+                               {{form.lastname(class="non-btn grouped")}}
+                            </div>
+                        </div>
+                        <div class="form-group-items">
+                            {{form.phone.label(class="labels")}}
+                            {{form.phone(class="non-btn")}}
+                        </div>
+                        <div class="form-group-items">
+                            {{form.password.label(class="labels")}}
+                            {{form.password(placeholder="*******", class="non-btn")}}
+                        </div>
+                        <div class="form-group-items">
+                            {{form.confirm_password.label(class="labels")}}
+                            {{form.confirm_password(placeholder="*******", class="non-btn")}}
+                        </div>
+                        <div class="form-group buttons">
+                            <div class="file-input">
+                                {{ form.profile_image(class="input-file", id="profile-image") }}
+                                <label for="profile-image" class="file-button">Change profile pic</label>
+                            </div>
+                            {{form.submit(class="update-btn")}}
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

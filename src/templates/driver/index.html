@@ -1,0 +1,84 @@
+<!-- Drivers index -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='driver/index.css')}}">
+    <script defer src="{{ url_for('static', filename='driver/index.js')}}"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+    <div class="container">
+    <div id="map"></div>
+        <header class="main-nav">
+            <button id="home-menu"><i class="fa-solid fa-bars"></i></button>
+            <button id="home-profile"><i class="fa-solid fa-user"></i></button>
+        </header>
+        <nav class="side-nav" id="side-nav">
+            <div class="side-nav-header">
+                <h2>Asambe</h2>
+                <button class="close-btn" id="close-btn">&times;</button>
+            </div>
+
+            <div class="status">
+                <label class="toggle-switch">
+                    {% if user.active == True %}
+                        <input type="checkbox" id="status" checked>
+                    {% else %}
+                        <input type="checkbox" id="status">
+                    {% endif %}
+                    <span class="slider"></span>
+                  </label>
+                <p>Active</p>
+            </div>
+            
+
+            <ul class="views">
+                <li id="my-locations" class="links">
+                    <buttton class="icons"><i class="fa-solid fa-location-crosshairs"></i></buttton>
+                    <p>My locations</p>
+                </li>
+
+
+                <li id="active-drivers" class="links">
+                    <buttton class="icons passengers"><i class="fa-solid fa-user-group"></i></i></buttton>
+                    <p>Passengers</p>
+                </li>
+
+
+                <li id="help" class="links">
+                    <buttton class="icons"><i class="fa-solid fa-question"></i></buttton>
+                    <p>Need help?</p>
+                </li>
+
+
+                <li id="feedback" class="links">
+                    <buttton class="icons feedback"><i class="fa-solid fa-message"></i></buttton>
+                    <p>Give us some feedback</p>
+                </li>
+
+
+                <li id="settings" class="links">
+                    <buttton class="icons"><i class="fa-solid fa-gear"></i></buttton>
+                    <p>Settings</p>
+                </li>
+
+
+                <li id="profile" class="links">
+                    <buttton class="icons"><i class="fa-solid fa-user"></i></buttton>
+                    <p>Profile</p>
+                </li>
+                <a href="{{url_for('auth.logout')}}">logout</a>
+                <p>{{user.phone}}</p>
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

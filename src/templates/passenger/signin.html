@@ -22,6 +22,10 @@
                 {{form.password}}
             </li>
             <li>
+                {{form.remember_me.label}}
+                {{form.remember_me}}
+            </li>
+            <li>
                 {{ form.submit }}
             </li>
             <a href="{{url_for('passenger_auth.forgot_password')}}"><h5>Forgot password</h5></a>

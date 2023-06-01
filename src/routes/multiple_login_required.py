@@ -1,6 +1,8 @@
 from functools import wraps
 from flask import redirect, url_for
 from flask_login import current_user
+from ..models.driver import Driver
+from ..models.passenger import Passenger
 
 
 def login_required_with_manager(login_manager):

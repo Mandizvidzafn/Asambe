@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="{{ url_for('passenger_auth.signup') }}" method="post">
         {{ form.csrf_token }}
         <ul>
             <img src="{{url_for('static', filename='lock.svg')}}"></img>
