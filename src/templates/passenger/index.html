@@ -36,7 +36,7 @@
                             </div>
                             <div class="trans-tpye-right">
                                 <div class="trans">
-                                    <input type="radio" class="trans-tpye-icons" name="bus" id="bus">
+                                    <input type="checkbox" class="trans-tpye-icons" name="bus" id="bus">
                                     <div class="radio-tile">
                                         <i class="fa-solid fa-bus"></i>
                                         <label for="bus"></label>
@@ -44,7 +44,7 @@
                                     <!-- <span>bus</span> -->
                                 </div>
                                 <div class="trans">
-                                    <input type="radio" class="trans-tpye-icons" name="quantuam" id="quantuam" checked>
+                                    <input type="checkbox" class="trans-tpye-icons" name="quantuam" id="quantuam">
                                     <div class="radio-tile">
                                         <i class="fa-solid fa-van-shuttle"></i>
                                         <label for="quantuam"></label>
@@ -52,7 +52,7 @@
                                     <!-- <span>quantuam</span> -->
                                 </div>
                                 <div class="trans">
-                                    <input type="radio" class="trans-tpye-icons" name="quza" id="quza">
+                                    <input type="checkbox" class="trans-tpye-icons" name="quza" id="quza">
                                     <div class="radio-tile">
                                         <i class="fa-solid fa-truck"></i>
                                         <label for="quza"></label>
@@ -61,7 +61,7 @@
 
                                 </div>
                                 <div class="trans">
-                                    <input type="radio" class="trans-tpye-icons" name="van" id="van">
+                                    <input type="checkbox" class="trans-tpye-icons" name="van" id="van">
                                     <div class="radio-tile">
                                         <i class="fa-solid fa-truck-front"></i>
                                         <label for="van"></label>
@@ -127,11 +127,13 @@
                     <p>Settings</p>
                 </li>
 
-
-                <li id="profile" class="links">
-                    <buttton class="icons"><i class="fa-solid fa-user"></i></buttton>
-                    <p>Profile</p>
-                </li>
+                <a href="{{url_for('passenger_views.profile')}}">
+                    <li id="profile" class="links">
+                        <buttton class="icons"><i class="fa-solid fa-user"></i></buttton>
+                        <p>Profile</p>
+                    </li>
+                </a>
+                
                 <a href="{{url_for('auth.logout')}}">logout</a>
                  <p>{{user.phone}}</p>
             </ul>
