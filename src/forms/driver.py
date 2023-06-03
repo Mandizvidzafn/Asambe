@@ -31,10 +31,13 @@ class SignupForm(FlaskForm):
     )
     phone = TelField("Phone", validators=[InputRequired()])
     vehicle_choices = [
-        ("option1", "bus"),
-        ("option2", "quantam"),
-        ("option3", "quza"),
-        ("option4", "van"),
+        (
+            "bus",
+            "bus",
+        ),
+        ("quantum", "quantam"),
+        ("quza", "quza"),
+        ("van", "van"),
     ]
     vehicle = RadioField("Type of vehicle", choices=vehicle_choices)
     newsletter = BooleanField(

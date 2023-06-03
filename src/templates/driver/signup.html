@@ -63,25 +63,25 @@
                                     <div class="trans">
                                         
                                         {{ vehicle(class="trans-type-icons trans-input") }}
-                                        {% if vehicle.label == "bus" %}
+                                        {% if vehicle.data == "bus" %}
                                             <div class="radio-tile">
                                                 <i class="fa-solid fa-bus"></i>
-                                                <label for="bus"></label>
+                                                <label for="vehicle-{{ loop.index0 }}"></label>
                                             </div>
-                                        {% elif vehicle.label == "quantuam" %}
+                                        {% elif vehicle.data == "quantum" %}
                                             <div class="radio-tile">
                                                 <i class="fa-solid fa-van-shuttle"></i>
-                                                <label for="quantuam"></label>
+                                                <label for="vehicle-{{ loop.index0 }}"></label>
                                             </div>
-                                        {% elif vehicle.label == "quza" %}
+                                        {% elif vehicle.data == "quza" %}
                                             <div class="radio-tile">
                                                 <i class="fa-solid fa-truck"></i>
-                                                <label for="quza"></label>
+                                                <label for="vehicle-{{ loop.index0 }}"></label>
                                             </div>
                                         {% else %}
                                             <div class="radio-tile">
                                                 <i class="fa-solid fa-truck-front"></i>
-                                                <label for="van"></label>
+                                                <label for="vehicle-{{ loop.index0 }}"></label>
                                             </div>
                                         {% endif %}
                                     </div>
