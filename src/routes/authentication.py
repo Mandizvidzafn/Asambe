@@ -19,7 +19,6 @@ def signin():
         form = SigninForm()
         phone = form.phone.data
         password = form.password.data
-        next_url = request.args.get("next")
 
         if form.validate_on_submit():
             check_driver = storage.get_filtered_item("driver", "phone", phone)

@@ -52,7 +52,7 @@ let tile = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
-//Updating the drivers live location
+//Updating the passengers live location
 let marker, circle
 
 navigator.geolocation.watchPosition(
@@ -60,13 +60,13 @@ navigator.geolocation.watchPosition(
       // Retrieve latitude and longitude from the position object
       const { latitude, longitude, accuracy } = position.coords;
       
-      // Update the map's view with the drivers's coordinates
+      // Update the map's view with the passengers's coordinates
       map.setView([latitude, longitude], 13);
 
       if (marker) {
         marker.setLatLng([latitude, longitude]);
       } else {
-        // Add a marker at the driver's initial location
+        // Add a marker at the passenger's initial location
         marker = L.marker([latitude, longitude]).addTo(map);
       }
 
@@ -83,7 +83,7 @@ navigator.geolocation.watchPosition(
       }
   );
 
-
+//for drivers locations and markers
 const socket = io.connect();
  
 socket.on("driver_location_update", (data) => {
@@ -116,3 +116,6 @@ socket.on("remove_inactive_drivers", (data) => {
 
 
 socket.emit("active_drivers_location");
+
+
+

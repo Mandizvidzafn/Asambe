@@ -5,48 +5,101 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='driver/signup.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
-    <form action="" method="post">
-        {{ form.csrf_token }}
-        <ul>
-            <img src="{{url_for('static', filename='lock.svg')}}"></img>
-            <h3>Sign up</h3>
-            <li>
-                {{ form.firstname.label }}
-                {{ form.firstname}}
-            </li>
-            <li>
-                {{ form.lastname.label }}
-                {{ form.lastname}}
-            </li>
-            <li>
-                {{form.phone.label}} 
-                {{form.phone}}
-            </li>
-            <li>
-                {{form.password.label}}
-                {{form.password}}
-            </li>
-            <li>
-                {{ form.confirm_password.label }}
-                {{ form.confirm_password }}
-            </li>
-            <li>
-                {{ form.newsletter }}
-                {{ form.newsletter.label }}
-            </li>
-            <li>
-                {{ form.vehicle.label }}
-                {{ form.vehicle }}
-            </li>
-            <li>
-                {{ form.submit }}
-            </li>
-            <a href="{{ url_for('driver_auth.signin') }}"><h5>sign In instead</h5></a>
-            <h1>Asambe</h1>
-        </ul>
+    <div class="container">
+        <div class="top">
+            <button class="back-btn", id="back-btn"><i class="fa-sharp fa-solid fa-arrow-left"></i></button>
+            <div class="top-center">
+                <span class="lock-key"><i class="fa-solid fa-unlock-keyhole"></i></span>
+                <h3>Sign up</h3>
+            </div>
+            <button class="close-btn" id="close-btn">&times;</button>
+        </div>
+        <form action="" method="post">
+            {{ form.csrf_token }}
 
-    </form>
+            <div class="center">
+                <ul>
+                    <div class="center-items">
+                        <div class="grouped-items">
+                            <li>
+                                {{ form.firstname(placeholder="First Name", class="grouped-input")}}
+                            </li>
+                            <li>
+                                {{ form.lastname(placeholder="Last Name", class="grouped-input")}}
+                            </li>
+                        </div>
+                        
+                        <li> 
+                            {{form.phone(placeholder="Phone Number", class="input")}}
+                        </li>
+                        <li>
+                            <div class="password-wrapper">
+                                {{ form.password(placeholder="Password", class="passwordInput mg-btm", id="password-input") }}
+                                <span><i class="fa-solid fa-eye" id="showPassword"></i></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="password-wrapper">
+                                {{ form.confirm_password(placeholder="Confirm Password", class="passwordInput mg-btm", id="confirmpassword-input") }}
+                                <span><i class="fa-solid fa-eye" id="showconfirmPassword"></i></span>
+                            </div>
+                        </li>
+                        <li id="newsletter">
+                            {{ form.newsletter(class="newsletter") }}
+                            {{ form.newsletter.label }}
+                        </li>
+
+                        <div class="display-trans">
+                            {{form.vehicle.label}}
+                            <li>
+                                <div class="trans-type">
+                                    {% for vehicle in form.vehicle %}
+
+                                    <div class="trans">
+                                        
+                                        {{ vehicle(class="trans-type-icons trans-input") }}
+                                        {% if vehicle.label == "bus" %}
+                                            <div class="radio-tile">
+                                                <i class="fa-solid fa-bus"></i>
+                                                <label for="bus"></label>
+                                            </div>
+                                        {% elif vehicle.label == "quantuam" %}
+                                            <div class="radio-tile">
+                                                <i class="fa-solid fa-van-shuttle"></i>
+                                                <label for="quantuam"></label>
+                                            </div>
+                                        {% elif vehicle.label == "quza" %}
+                                            <div class="radio-tile">
+                                                <i class="fa-solid fa-truck"></i>
+                                                <label for="quza"></label>
+                                            </div>
+                                        {% else %}
+                                            <div class="radio-tile">
+                                                <i class="fa-solid fa-truck-front"></i>
+                                                <label for="van"></label>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                     {% endfor %}
+                                </div>                                
+                            </li>
+                        </div>
+                        <li>
+                            {{ form.submit(class="signup") }}
+                            <a href="{{ url_for('auth.signin')}}"><p id="signin">Sign In instead?</p></a>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </form>
+        <footer>
+            <h1>Asambe</h1>
+        </footer>
+    </div>
 </body>
 </html>
