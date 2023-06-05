@@ -104,28 +104,32 @@
                 </li>
 
 
-                <li id="active-drivers" class="links">
-                    <buttton class="icons"><i class="fa-solid fa-car"></i></buttton>
-                    <p>Active drivers</p>
-                </li>
+               <a href="{{url_for('passenger_views.drivers')}}">
+                    <li id="active-drivers" class="links">
+                        <buttton class="icons"><i class="fa-solid fa-car"></i></buttton>
+                        <p>Active drivers</p>
+                    </li>
+               </a>
 
+               <a href="https://asambe.tawk.help/">
+                    <li id="help" class="links">
+                        <buttton class="icons"><i class="fa-solid fa-question"></i></buttton>
+                        <p>Need help?</p>
+                    </li>
+               </a>
+              
 
-                <li id="help" class="links">
-                    <buttton class="icons"><i class="fa-solid fa-question"></i></buttton>
-                    <p>Need help?</p>
-                </li>
-
-
-                <li id="feedback" class="links">
-                    <buttton class="icons"><i class="fa-solid fa-message"></i></buttton>
-                    <p>Give us some feedback</p>
-                </li>
-
-
-                <li id="settings" class="links">
+                <a href="{{url_for('views.feedback')}}">
+                    <li id="feedback" class="links">
+                        <buttton class="icons"><i class="fa-solid fa-message"></i></buttton>
+                        <p>Give us some feedback</p>
+                    </li>
+                </a>
+                
+                <!-- <li id="settings" class="links">
                     <buttton class="icons"><i class="fa-solid fa-gear"></i></buttton>
                     <p>Settings</p>
-                </li>
+                </li> -->
 
                 <a href="{{url_for('passenger_views.profile')}}">
                     <li id="profile" class="links">
@@ -134,10 +138,22 @@
                     </li>
                 </a>
                 
-                <a href="{{url_for('auth.logout')}}">logout</a>
-                 <p>{{user.phone}}</p>
+                <a href="{{url_for('auth.logout')}}"><button id="logout-btn">Logout</button></a>
             </ul>
         </nav>
     </div>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/647cbcef7957702c744bb600/1h23k42fc';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 </html>

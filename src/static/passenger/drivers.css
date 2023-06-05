@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url(../../static/pexels-kelly-2876511.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+header {
+    text-align: center;
+    color: #fff;
+    font-size: 25px;
+}
+
+header h1{
+    padding-top: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+td {
+    text-align: center;
+}
+
+table {
+    width: 70%;
+    border-radius: 1.5rem;
+    border-spacing: 0;
+    background-color: #fff5;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px black;
+}
+
+tr {
+    height: 46px;
+}
+
+
+thead tr{
+    background-color: rgb(67, 66, 66);
+    color: #fff;
+    font-size: larger;
+}
+
+.start {
+    border-top-left-radius: 1.5rem;
+}
+
+.end {
+    border-top-right-radius: 1.5rem;
+}
+
+tbody {
+    font-size: large;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgb(175, 146, 146);
+}
+
+tbody tr:nth-child(odd) {
+   font-weight: 550;
+}

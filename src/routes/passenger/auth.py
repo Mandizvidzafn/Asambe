@@ -55,7 +55,6 @@ def signup():
             form.phone.errors.append("Phone number exists")
         else:
             new_user = Passenger(
-                id=generate_passenger_id(),
                 lastname=lastname,
                 firstname=firstname,
                 phone=phone,
@@ -135,10 +134,10 @@ def verify_otp():
                 verify_sid
             ).verification_checks.create(to=phone, code=otp_int)
             if verify_otp_code.status == "approved":
-                session.clear()
                 existing_passenger = storage.get_filtered_item(
                     "passenger", "phone", phone
                 )
+                session.clear()
                 login_user(existing_passenger)
                 return redirect(url_for("passenger_views.home"))
             else:
