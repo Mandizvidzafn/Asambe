@@ -6,6 +6,11 @@ from flask_mail import Message
 views = Blueprint("views", __name__, url_prefix="/")
 
 
+@views.route("/", methods=["GET", "POST"])
+def index():
+    return render_template("index.html")
+
+
 @views.route("/feedback", methods=["GET", "POST"])
 @login_required
 def feedback():
@@ -22,3 +27,8 @@ def feedback():
         subject = form.subject.data
 
     return render_template("feedback.html", form=form)
+
+
+@views.route("/signup", methods=["GET", "POST"])
+def signup():
+    return render_template("spDriver-Passenger.html")

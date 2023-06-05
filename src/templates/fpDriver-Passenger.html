@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(111, 110, 110);
+        }
+
+        .close-btn,
+        .back-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 0;
+        }
+
+        .back-btn {
+            font-size: larger;
+        }
+
+        .close-btn {
+            font-size: xx-large;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+
+        .container {
+            width: 450px;
+            height: 200px;
+            box-shadow: 0 0 15px black;
+            border-radius: 20px;
+            background-color: rgb(182, 181, 181);
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            gap: 30px;
+        }
+
+        .choices button {
+            width: 90px;
+            height: 40px;
+            font-size: medium;
+            color: #fff;
+            border-radius: 7px;
+            border-color: black;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn", id="back-btn"><i class="fa-sharp fa-solid fa-arrow-left"></i></button>
+            <h1>Asambe</h1>
+            <button class="close-btn" id="close-btn">&times;</button>
+        </header>
+        
+        <div class="choices">
+            <button id="driver-btn">Driver</button>
+            <button id="passenger-btn">Passenger</button>
+        </div>
+    </div>
+
+    <script>
+
+        // Add event listener to the back button
+        document.getElementById("back-btn").addEventListener("click", function() {
+          // Go back to the previous page
+          window.history.back();
+        });
+        
+
+         // Add event listener to the close button
+        document.getElementById("close-btn").addEventListener("click", function() {
+          // Redirect to the / URL
+          window.location.href = "/";
+        });
+        
+
+        // Add event listener to the driver btn button
+        document.getElementById("driver-btn").addEventListener("click", function() {
+          // Redirect to the /passenger URL
+          window.location.href = "/driver/retrieve-password";
+        });
+
+
+        // Add event listener to the passenger btn button
+        document.getElementById("passenger-btn").addEventListener("click", function() {
+          // Redirect to the /passenger URL
+          window.location.href = "/passenger/retrieve-password";
+        });
+      </script>
+</body>
+</html>

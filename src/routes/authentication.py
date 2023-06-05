@@ -46,6 +46,11 @@ def signin():
     return render_template("signin.html", form=form)
 
 
+@auth.route("/retrieve-password", methods=["GET", "POST"])
+def retrievePassword():
+    return render_template("fpDriver-Passenger.html")
+
+
 @auth.route("/logout", methods=["GET", "POST"])
 @login_required
 def logout():
