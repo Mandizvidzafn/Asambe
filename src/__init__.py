@@ -6,6 +6,8 @@ from flask_socketio import SocketIO
 import os
 from dotenv import load_dotenv
 from sqlalchemy import text
+from flask_mail import Mail
+
 
 load_dotenv()
 
@@ -14,6 +16,7 @@ login_manager = LoginManager()
 db_Name = "asambe"
 db = SQLAlchemy()
 socketio = SocketIO()
+mail = Mail()
 username = os.getenv("MysqlUSER")
 password = os.getenv("PASSWORD")
 
@@ -21,15 +24,25 @@ password = os.getenv("PASSWORD")
 def create_app():
     app = Flask(__name__)
 
+    # Database configuration
     app.config[
         "SQLALCHEMY_DATABASE_URI"
     ] = f"mysql://{username}:{password}@localhost/{db_Name}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SECRET_KEY"] = "hehehehehe"
 
+    # Email configuration
+    app.config["MAIL_SERVER"] = "smtp.example.com"
+    app.config["MAIL_PORT"] = 587
+    app.config["MAIL_USE_TLS"] = True
+    app.config["MAIL_USERNAME"] = "your_username"
+    app.config["MAIL_PASSWORD"] = "your_password"
+    app.config["MAIL_DEFAULT_SENDER"] = "your_email@example.com"
+
     # initializations
     db.init_app(app)
     socketio.init_app(app)
+    mail.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = "auth.signin"
 
@@ -60,6 +73,7 @@ def create_app():
     from .routes.admin.view import admin_views
     from .routes.admin.auth import admin_auth
     from .routes.authentication import auth
+    from .routes.views import views
 
     app.register_blueprint(passenger_auth)
     app.register_blueprint(passenger_views)
@@ -68,6 +82,7 @@ def create_app():
     app.register_blueprint(admin_views)
     app.register_blueprint(admin_auth)
     app.register_blueprint(auth)
+    app.register_blueprint(views)
 
     return app
 

@@ -64,18 +64,27 @@ ul {
 }
   
 .password-wrapper input {
-    padding-right: 45px; 
+    padding-right: 45px;
 }
   
 .password-wrapper span {
     position: absolute;
-    right: 10px; 
+    right: 10px;
+    top: 50%;
+    transform: translate(-50%, -50%);
     cursor: pointer;
+}
+  
+.password-wrapper i.fa-eye,
+.password-wrapper i.fa-eye-slash {
+    position: absolute;
+    right: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
 }
+  
+  
 
 .passwordInput {
     min-width: 320px;
@@ -83,6 +92,7 @@ ul {
     font-size: large;
     padding: 5px;
     margin-top: 20px;
+    position: relative;
 }
 
 
@@ -134,3 +144,18 @@ footer {
     margin-bottom: 10px;
 }
 
+.reset-password {
+    text-align: end;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(97, 95, 95);
+    text-decoration: underline;
+}

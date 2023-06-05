@@ -47,7 +47,6 @@ def signup():
             form.phone.errors.append("Phone number exists")
         else:
             new_user = Driver(
-                id=generate_driver_id(),
                 lastname=lastname,
                 firstname=firstname,
                 phone=phone,

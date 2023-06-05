@@ -32,6 +32,14 @@ def profile():
     return render_template("passenger/profile.html", user=current_user, form=form)
 
 
+@passenger_views.route("/drivers", methods=["GET", "POST"])
+@login_required
+def drivers():
+    drivers = storage.get_all_filtered_item("driver", "active", True)
+
+    return render_template("passenger/drivers.html", drivers=drivers)
+
+
 # show active drivers on passenger map
 @socketio.on("active_drivers_location")
 def send_drivers_location():

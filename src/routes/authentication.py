@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, login_required, logout_user
 from ..forms.signin import SigninForm
 from ..models.engine import storage
 from flask_bcrypt import check_password_hash
-from urllib.parse import urlparse, urljoin
+
 
 auth = Blueprint("auth", __name__, url_prefix="/signin")
 
@@ -25,7 +25,7 @@ def signin():
             check_passenger = storage.get_filtered_item("passenger", "phone", phone)
             if check_driver:
                 if check_password_hash(check_driver.password, password):
-                    login_user(check_driver)
+                    login_user(check_driver, remember=True)
                     print(
                         f"current driver user is {current_user.phone} and authenticated"
                     )
@@ -34,7 +34,7 @@ def signin():
 
             elif check_passenger:
                 if check_password_hash(check_passenger.password, password):
-                    login_user(check_passenger)
+                    login_user(check_passenger, remember=True)
                     if current_user.is_authenticated:
                         print(
                             f"current passenger user is {current_user.phone} and authenticated"
