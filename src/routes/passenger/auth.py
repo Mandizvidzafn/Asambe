@@ -103,13 +103,15 @@ def forgot_password():
 
     if form.validate_on_submit():
         phone = form.phone.data
+        existing_passenger = storage.get_filtered_item("passenger", "phone", phone)
 
-        session["phone"] = phone
-        send_otp = client.verify.services(reset_sid).verifications.create(
-            to=phone, channel="sms"
-        )
-        if send_otp.sid:
-            return redirect(url_for("passenger_auth.verify_otp"))
+        if existing_passenger:
+            session["phone"] = phone
+            send_otp = client.verify.services(reset_sid).verifications.create(
+                to=phone, channel="sms"
+            )
+            if send_otp.sid:
+                return redirect(url_for("passenger_auth.verify_otp"))
 
     return render_template("passenger/forgot_password.html", form=form)
 

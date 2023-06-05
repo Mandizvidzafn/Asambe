@@ -37,7 +37,7 @@
                         
                         <li>
                             {{ form.submit(class="signin") }}
-                            <a href="./forgotPassword.html" ><p class="reset-password">Forgot password?</p></a>
+                            <a href="{{url_for('auth.retrievePassword')}}" ><p class="reset-password">Forgot password?</p></a>
                         </li>
                     </div>
                 </ul>
@@ -62,6 +62,20 @@
             showPasswordIcon.classList.add('fa-eye');
           }
         });
-      </script>
+
+
+        // Add event listener to the back button
+        document.getElementById("back-btn").addEventListener("click", function() {
+          // Go back to the previous page
+          window.history.back();
+        });
+        
+
+         // Add event listener to the close button
+        document.getElementById("close-btn").addEventListener("click", function() {
+          // Redirect to the / URL
+          window.location.href = "/";
+        });
+    </script>
 </body>
 </html>

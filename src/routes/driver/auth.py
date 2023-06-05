@@ -99,13 +99,14 @@ def forgot_password():
 
     if form.validate_on_submit():
         phone = form.phone.data
-
-        session["phone"] = phone
-        send_otp = client.verify.services(reset_sid).verifications.create(
-            to=phone, channel="sms"
-        )
-        if send_otp.sid:
-            return redirect(url_for("driver_auth.verify_otp"))
+        existing_driver = storage.get_filtered_item("driver", "phone", phone)
+        if existing_driver:
+            session["phone"] = phone
+            send_otp = client.verify.services(reset_sid).verifications.create(
+                to=phone, channel="sms"
+            )
+            if send_otp.sid:
+                return redirect(url_for("driver_auth.verify_otp"))
 
     return render_template("driver/forgot_password.html", form=form)
 
