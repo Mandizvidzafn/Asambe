@@ -49,7 +49,8 @@ ul {
 
 .grouped-items {
     display: flex;
-    column-gap: 12px;
+    row-gap: 22px;
+    column-gap: 13px;
 }
 
 .grouped-input {
@@ -67,6 +68,10 @@ ul {
     margin-top: 20px;
 }
 
+#password-input {
+    margin-bottom: 0;
+}
+
 .password-wrapper {
     position: relative;
     display: flex;
@@ -74,7 +79,8 @@ ul {
 }
   
 .password-wrapper input {
-    padding-right: 45px; 
+    padding-right: 45px;
+    position: relative; 
 }
   
 .password-wrapper span {
@@ -84,8 +90,21 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: 50%;
 }
+
+.text-error {
+    color: rgb(247, 57, 57);
+}
+
+#passwd-span {
+    top: 25px;
+}
+
+#confirm_passwd-span {
+    top: 23px;
+}
+
 
 .passwordInput {
     min-width: 320px;
@@ -95,8 +114,14 @@ ul {
     margin-top: 20px;
 }
 
-.mg-btm {
+.mg-btm, .confirm_passwd {
     margin-bottom: 12px;
+}
+
+
+
+#confirmpassword-input {
+    margin-bottom: 0;
 }
 
 #newsletter {
@@ -176,3 +201,36 @@ footer {
     margin-bottom: 10px;
 }
 
+#phone {
+    margin-top: 20px !important;
+    height: 48px !important;
+    width: 378px;
+    position: relative;
+    
+}
+
+.iti__input {
+    height: 48px;
+    margin-top: 20px;
+}
+
+/* Target the country dropdown */
+.iti__flag-container {
+    height: 48px;
+    position: absolute;
+    margin-top: 20px;
+}
+
+#phone .iti {
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+
+.iti__country-list {
+    width: 378px !important;
+  }
+
+  .intl-tel-input .country-list .country {
+    width: 200px !important; 
+  }

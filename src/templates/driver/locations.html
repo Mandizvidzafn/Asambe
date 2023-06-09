@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='driver/locations.css')}}">
+</head>
+<body>
+    <div class="container">
+        <div class="default">
+            <p>My default location:</p>
+            <div class="inp-btn">
+                <input type="text" name="default" id="default" value="{{user.location}}">
+                <button type="submit" id="set-default">SET</button>
+            </div>
+        </div>
+        <div class="to">
+            <p>Starting point:</p>
+            <div class="inp-btn">
+                <input type="text" name="to" id="start" value="{{user.start_loc}}">
+                <button type="submit" id="set-start">SET</button>
+            </div>
+        </div>
+        <div class="from">
+            <p>Ending Point:</p>
+            <div class="inp-btn">
+                <input type="text" name="from" id="end" value="{{user.end_loc}}">
+                <button type="submit" id="set-end">SET</button>
+            </div>
+        </div>
+    </div>
+
+    <Script>
+        const mylocation = document.getElementById('default')
+        const start = document.getElementById('start')
+        const end = document.getElementById('end')
+        const socket = io.connect()
+
+        document.getElementById("set-start").addEventListener("click", () => {
+            const slocation = start.value;
+            socket.emit("set-start-location", {slocation});
+        });
+
+        document.getElementById("set-default").addEventListener("click", () => {
+            const dlocation = mylocation.value;
+            socket.emit("set-default-location", {dlocation})
+        });
+
+        document.getElementById("set-end").addEventListener("click", () => {
+            const elocation = end.value;
+            socket.emit("set-end-location", {elocation})
+        });
+    </Script>
+</body>
+</html>

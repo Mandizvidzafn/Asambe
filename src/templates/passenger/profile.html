@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='passenger/profile.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     
 </head>
 <body>
@@ -14,26 +15,41 @@
         <header>
             <button class="back-btn" id="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
             <h1>My profile</h1>
-            <button class="delete-account-btn"><i class="fa-solid fa-trash"></i></button>
+            <button class="delete-account-btn" id="delete-account-btn"><i class="fa-solid fa-trash"></i></button>
         </header>
         <main>
             <section class="left">
                 <div class="left-top">
+                    {% if user.profile_pic != 'default.jpg' %}
+                        <img src="{{url_for('static', filename='img/' ~ user.profile_pic)}}" alt="">
+                    {% else %}
                         <img src="{{url_for('static', filename='default.jpg')}}" alt="">
+                    {% endif %}
                         
-                        <p class="fullname">{{user.firstname}} {{user.lastname}} </p>
-                        <p class="phone"> +27 {{ user.phone }} 000 00</p>
-                        <div class="location">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <p>Wakanda</p>
+                    <p class="fullname">{{user.firstname}} {{user.lastname}} </p>
+                    <p class="phone">{{ user.phone }}</p>
+                    <div class="location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div class="loc_name">
+                            {% if user.location != None %}
+                                <p>{{user.location}}</p>
+                            {% else %}
+                                <p>Wakanda</p>
+                            {% endif %}
                         </div>
+                       
+                    </div>
                 </div>
                 <div class="left-bottom">
                     <h2>Privacy</h2>
 
                     <div class="privacy">
                         <label class="toggle-switch">
-                            <input type="checkbox" id="status">
+                            {% if user.profile_visibility %}
+                                <input type="checkbox" id="profile-visibility" checked>
+                            {% else %}
+                                <input type="checkbox" id="profile-visibility">
+                            {% endif %}
                             <span class="slider"></span>
                           </label>
                         <p>Profile visible to drivers</p>
@@ -41,7 +57,11 @@
 
                     <div class="privacy">
                         <label class="toggle-switch">
-                            <input type="checkbox" id="status">
+                            {% if user.number_visibility %}
+                                <input type="checkbox" id="number-visibility" checked>
+                            {% else %}
+                                <input type="checkbox" id="number-visibility">
+                            {% endif %}
                             <span class="slider"></span>
                           </label>
                         <p>Hide number from drivers</p>
@@ -49,7 +69,11 @@
 
                     <div class="privacy">
                         <label class="toggle-switch">
-                            <input type="checkbox" id="status">
+                            {% if user.newsletter %}
+                                <input type="checkbox" id="newsletter" checked>
+                            {% else %}
+                                <input type="checkbox" id="newsletter">
+                            {% endif %}
                             <span class="slider"></span>
                           </label>
                         <p>Receive updates</p>
@@ -59,7 +83,9 @@
             
             <section class="right">
                 <h2>Edit your profile</h2>
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {{ form.csrf_token }}
+
                     <div class="form-container">
                         <div class="form-group">
                             <div class="form-group-items">
@@ -73,15 +99,36 @@
                         </div>
                         <div class="form-group-items">
                             {{form.phone.label(class="labels")}}
-                            {{form.phone(class="non-btn")}}
+                            {{form.phone(class="non-btn", id="phone")}}
+                            {% if form.phone.errors %}
+                                <ul id="phone-errorbox">
+                                    {% for error in form.phone.errors %}
+                                        <li class="text-error">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                         <div class="form-group-items">
                             {{form.password.label(class="labels")}}
-                            {{form.password(placeholder="*******", class="non-btn")}}
+                            {{form.password(placeholder="*******", class="non-btn", id="password")}}
+                            {% if form.password.errors %}
+                                <ul id="password-errorbox">
+                                    {% for error in form.password.errors %}
+                                        <li class="text-error">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                         <div class="form-group-items">
                             {{form.confirm_password.label(class="labels")}}
-                            {{form.confirm_password(placeholder="*******", class="non-btn")}}
+                            {{form.confirm_password(placeholder="*******", class="non-btn", id="confirm-password")}}
+                            {% if form.confirm_password.errors %}
+                                <ul id="confirm-password-errorbox">
+                                    {% for error in form.confirm_password.errors %}
+                                        <li class="text-error">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                         <div class="form-group buttons">
                             <div class="file-input">
@@ -90,17 +137,87 @@
                             </div>
                             {{form.submit(class="update-btn")}}
                         </div>
+                        {% if form.profile_image.errors %}
+                            <ul id="password-errorbox">
+                                {% for error in form.profile_image.errors %}
+                                    <li class="text-error">{{error}}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
                 </form>
             </section>
         </main>
     </div>
     <script>
+        let newsletter = document.getElementById("newsletter")
+        let profileVisibility = document.getElementById("profile-visibility")
+        let numberVisibility = document.getElementById("number-visibility")
+        const socket = io.connect();
+        const phoneInput = document.querySelector("#phone");
+        const passwordInput = document.querySelector("#password");
+        const confirmpasswordInput = document.querySelector("#confirm-password");
+        
+
+
         // Add event listener to the back button
         document.getElementById("back-btn").addEventListener("click", function() {
           // Go back to the previous page
           window.history.back();
         });
+
+
+        //updating the checkboxes
+        // Add an event listener to the number visibility checkbox
+        numberVisibility.addEventListener("change", () => {
+          // Get the status value (true or false) from the checkbox
+          const num_visibility = numberVisibility.checked;
+        
+          // Emit the status update to the server
+          socket.emit("number_visibility", { num_visibility });
+        });
+
+
+        // Add an event listener to the newsletter checkbox
+        newsletter.addEventListener("change", () => {
+          // Get the status value (true or false) from the checkbox
+          const subscribe = newsletter.checked;
+        
+          // Emit the status update to the server
+          socket.emit("newsletter_update", { subscribe });
+        });
+
+
+        // Add an event listener to the profile visibility checkbox
+        profileVisibility.addEventListener("change", () => {
+          // Get the status value (true or false) from the checkbox
+          const pro_visibility = profileVisibility.checked;
+        
+          // Emit the status update to the server
+          socket.emit("profile_visibility", { pro_visibility });
+        });
+
+
+        //Add event listener the phone box 
+        phoneInput.addEventListener("input", () => {
+            const phoneErrorBox = document.getElementById("phone-errorbox");
+            phoneErrorBox.innerHTML = '';
+        });
+
+        //Add event listener the passwd box 
+        passwordInput.addEventListener("input", () => {
+            const passwdErrorBox = document.getElementById("password-errorbox");
+            passwdErrorBox.innerHTML = '';
+        });
+
+        //Add event listener the passwd box 
+        confirmpasswordInput.addEventListener("input", () => {
+            const confirmpasswdErrorBox = document.getElementById("confirm-password-errorbox");
+            confirmpasswdErrorBox.innerHTML = '';
+        });
+
+
+         
       </script>
 </body>
 </html>

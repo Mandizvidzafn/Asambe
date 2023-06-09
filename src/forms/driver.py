@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms.validators import InputRequired, Length, DataRequired, EqualTo
+from wtforms.validators import InputRequired, Length
+from flask_wtf.file import FileAllowed
 from wtforms import (
     BooleanField,
     StringField,
@@ -26,20 +27,18 @@ class SignupForm(FlaskForm):
         validators=[
             InputRequired(),
             Length(min=2, max=40),
-            EqualTo("password", message="Passwords must match"),
         ],
     )
     phone = TelField("Phone", validators=[InputRequired()])
     vehicle_choices = [
-        (
-            "bus",
-            "bus",
-        ),
+        ("bus", "bus"),
         ("quantum", "quantam"),
         ("quza", "quza"),
         ("van", "van"),
     ]
-    vehicle = RadioField("Type of vehicle", choices=vehicle_choices)
+    vehicle = RadioField(
+        "Type of vehicle", choices=vehicle_choices, validators=[InputRequired()]
+    )
     newsletter = BooleanField(
         "I want to reacieve marketing information and updates", default=False
     )
@@ -63,23 +62,28 @@ class VerifyOTPForm(FlaskForm):
 
 
 class UpdateForm(FlaskForm):
-    firstname = StringField(
-        "First Name", validators=[InputRequired(), Length(min=2, max=40)]
-    )
-    lastname = StringField(
-        "Last Name", validators=[InputRequired(), Length(min=2, max=40)]
-    )
-    phone = TelField("Phone", validators=[InputRequired()])
-    password = PasswordField("Password", validators=[DataRequired(), Length(min=7)])
-    confirm_password = PasswordField(
-        "Confirm Password",
+    firstname = StringField("First Name", validators=[Length(min=2, max=40)])
+    lastname = StringField("Last Name", validators=[Length(min=2, max=40)])
+    phone = TelField("Phone")
+    password = PasswordField("Password")
+    confirm_password = PasswordField("Confirm Password")
+
+    vehicle_choices = [
+        ("bus", "bus"),
+        ("quantum", "quantum"),
+        ("quza", "quza"),
+        ("van", "van"),
+    ]
+    # vehicle = RadioField("Type of vehicle", choices=vehicle_choices)
+
+    profile_image = FileField(
+        "Change profile pic",
         validators=[
-            DataRequired(),
-            Length(min=7),
-            EqualTo("password", message="Passwords must match"),
+            FileAllowed(
+                ["jpg", "png", "jpeg"],
+                "Invalid file format. Only JPEG and PNG images are allowed!",
+            )
         ],
     )
-
-    profile_image = FileField("Change profile pic")
 
     submit = SubmitField("Update information")

@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed
 from wtforms import (
     StringField,
     PasswordField,
@@ -32,7 +33,6 @@ class SignupForm(FlaskForm):
         validators=[
             DataRequired(),
             Length(min=7),
-            EqualTo("password", message="Passwords must match"),
         ],
     )
     newsletter = BooleanField(
@@ -61,23 +61,22 @@ class VerifyOTPForm(FlaskForm):
 
 
 class UpdateForm(FlaskForm):
-    firstname = StringField(
-        "First Name", validators=[InputRequired(), Length(min=2, max=40)]
-    )
-    lastname = StringField(
-        "Last Name", validators=[InputRequired(), Length(min=2, max=40)]
-    )
-    phone = StringField("Phone", validators=[InputRequired()])
-    password = PasswordField("Password", validators=[DataRequired(), Length(min=7)])
+    firstname = StringField("First Name", validators=[Length(min=2, max=40)])
+    lastname = StringField("Last Name", validators=[Length(min=2, max=40)])
+    phone = TelField("Phone")
+    password = PasswordField("Password")
     confirm_password = PasswordField(
         "Confirm Password",
-        validators=[
-            DataRequired(),
-            Length(min=7),
-            EqualTo("password", message="Passwords must match"),
-        ],
     )
 
-    profile_image = FileField("Change profile pic")
+    profile_image = FileField(
+        "Change profile pic",
+        validators=[
+            FileAllowed(
+                ["jpg", "png", "jpeg"],
+                "Invalid file format. Only JPEG and PNG images are allowed!",
+            )
+        ],
+    )
 
     submit = SubmitField("Update information")

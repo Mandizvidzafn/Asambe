@@ -18,18 +18,28 @@
         <header>
             <button class="back-btn" id="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
             <h1>My profile</h1>
-            <button class="delete-account-btn"><i class="fa-solid fa-trash"></i></button>
+            <button class="delete-account-btn" id="delete-account-btn"><i class="fa-solid fa-trash"></i></button>
         </header>
         <main>
             <section class="left">
                 <div class="left-top">
-                    <img src="{{url_for('static', filename='default.jpg')}}" alt="">
-                    
+                    {% if user.profile_pic != 'default.jpg' %}
+                        <img src="{{url_for('static', filename='img/' ~ user.profile_pic)}}" alt="">
+                    {% else %}
+                        <img src="{{url_for('static', filename='default.jpg')}}" alt="">
+                    {% endif %}
                     <p class="fullname">{{user.firstname}} {{user.lastname}} </p>
-                    <p class="phone"> +27 {{ user.phone }} 000 00</p>
+                    <p class="phone">{{ user.phone }}</p>
                     <div class="location">
                         <i class="fa-solid fa-location-dot"></i>
-                        <p>Wakanda</p>
+                        <div class="loc_name">
+                            {% if user.location != None %}
+                                <p>{{user.location}}</p>
+                            {% else %}
+                                <p>Wakanda</p>
+                            {% endif %}
+                        </div>
+                       
                     </div>
                     <div class="status">
                         <label class="toggle-switch">
@@ -44,10 +54,14 @@
                     </div>
                 </div>
                 <div class="left-bottom">
-                    <h2>Transport type</h2>
-                    <div class="trans-type">
+                    <h2>Type of Vehicle</h2>
+                    <div class="trans-type-right">
                         <div class="trans">
-                            <input type="radio" class="trans-type-icons" name="bus" id="bus">
+                            {% if user.vehicle_type == "bus" %}
+                                <input type="radio" class="trans-type-icons" name="vehicle" id="bus" checked>
+                            {% else %}
+                                <input type="radio" class="trans-type-icons" name="vehicle" id="bus">
+                            {% endif %}
                             <div class="radio-tile">
                                 <i class="fa-solid fa-bus"></i>
                                 <label for="bus"></label>
@@ -55,7 +69,12 @@
                             <!-- <span>bus</span> -->
                         </div>
                         <div class="trans">
-                            <input type="radio" class="trans-type-icons" name="quantuam" id="quantuam" checked>
+                            {% if user.vehicle_type == "quantum" %}
+                                <input type="radio" class="trans-type-icons" name="vehicle" id="quantum" checked>
+                            {% else %}
+                                <input type="radio" class="trans-type-icons" name="vehicle" id="quantum">
+                            {% endif %}
+    
                             <div class="radio-tile">
                                 <i class="fa-solid fa-van-shuttle"></i>
                                 <label for="quantuam"></label>
@@ -63,7 +82,12 @@
                             <!-- <span>quantuam</span> -->
                         </div>
                         <div class="trans">
-                            <input type="radio" class="trans-type-icons" name="quza" id="quza">
+                        {% if user.vehicle_type == "quza" %}
+                            <input type="radio" class="trans-type-icons" name="vehicle" id="quza" checked>
+                        {% else %}
+                            <input type="radio" class="trans-type-icons" name="vehicle" id="quza">
+                        {% endif %}
+
                             <div class="radio-tile">
                                 <i class="fa-solid fa-truck"></i>
                                 <label for="quza"></label>
@@ -72,7 +96,11 @@
 
                         </div>
                         <div class="trans">
-                            <input type="radio" class="trans-type-icons" name="van" id="van">
+                        {% if user.vehicle_type == "van" %}
+                            <input type="radio" class="trans-type-icons" name="vehicle" id="van" checked>
+                        {% else %}
+                            <input type="radio" class="trans-type-icons" name="vehicle" id="van">
+                        {% endif %}
                             <div class="radio-tile">
                                 <i class="fa-solid fa-truck-front"></i>
                                 <label for="van"></label>
@@ -85,7 +113,9 @@
             
             <section class="right">
                 <h2>Edit your profile</h2>
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {{ form.csrf_token }}
+                    <input type="hidden" name="_method" value="PATCH">
                     <div class="form-container">
                         <div class="form-group">
                             <div class="form-group-items">
@@ -100,14 +130,35 @@
                         <div class="form-group-items">
                             {{form.phone.label(class="labels")}}
                             {{form.phone(class="non-btn")}}
+                            {% if form.phone.errors %}
+                                <ul id="phone-errorbox">
+                                    {% for error in form.phone.errors %}
+                                        <li class="text-error">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                         <div class="form-group-items">
                             {{form.password.label(class="labels")}}
                             {{form.password(placeholder="*******", class="non-btn")}}
+                            {% if form.password.errors %}
+                                <ul id="password-errorbox">
+                                    {% for error in form.password.errors %}
+                                        <li class="text-error">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                         <div class="form-group-items">
                             {{form.confirm_password.label(class="labels")}}
                             {{form.confirm_password(placeholder="*******", class="non-btn")}}
+                            {% if form.confirm_password.errors %}
+                                <ul id="confirm-password-errorbox">
+                                    {% for error in form.confirm_password.errors %}
+                                        <li class="text-error">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                         <div class="form-group buttons">
                             <div class="file-input">
@@ -116,16 +167,67 @@
                             </div>
                             {{form.submit(class="update-btn")}}
                         </div>
+                            {% if form.profile_image.errors %}
+                                <ul id="password-errorbox">
+                                    {% for error in form.profile_image.errors %}
+                                        <li class="text-error">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                     </div>
                 </form>
             </section>
         </main>
     </div>
     <script>
+        const phoneInput = document.querySelector("#phone");
+        const passwordInput = document.querySelector("#password");
+        const confirmpasswordInput = document.querySelector("#confirm_password");
+        
         // Add event listener to the back button
         document.getElementById("back-btn").addEventListener("click", function() {
           // Go back to the previous page
           window.history.back();
+        });
+
+        //Add event listener the phone box 
+        phoneInput.addEventListener("input", () => {
+            const phoneErrorBox = document.getElementById("phone-errorbox");
+            phoneErrorBox.innerHTML = '';
+        });
+
+        //Add event listener the passwd box 
+        passwordInput.addEventListener("input", () => {
+            const passwdErrorBox = document.getElementById("password-errorbox");
+            passwdErrorBox.innerHTML = '';
+        });
+
+        //Add event listener the passwd box 
+        confirmpasswordInput.addEventListener("input", () => {
+            const confirmpasswdErrorBox = document.getElementById("confirm-password-errorbox");
+            confirmpasswdErrorBox.innerHTML = '';
+        });
+
+        // Add event listener to each radio button
+        const radioButtons = document.querySelectorAll('.trans-type-icons');
+        radioButtons.forEach(radio => {
+          radio.addEventListener('change', function() {
+            if (this.checked) {
+              const selectedId = this.id;
+              // Emit the selected ID to the backend using Socket.io
+              socket.emit('vehicle_update', {selectedId});
+            }
+          });
+        });
+
+        //Delte account
+        document.getElementById("delete-account-btn").addEventListener("click", () => {
+            let verify = confirm("Are you sure you want to delete your account")
+            if (verify){
+                clicked = true
+                socket.emit("delete-driver-account", {clicked})
+                window.location.href = '/'
+            }
         });
       </script>
 </body>

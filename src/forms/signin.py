@@ -1,6 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import TelField, PasswordField, SubmitField, SelectField
-from wtforms.validators import InputRequired
+from wtforms import (
+    TelField,
+    PasswordField,
+    SubmitField,
+    SelectField,
+    FileField,
+    StringField,
+)
+from wtforms.validators import InputRequired, Length
 
 
 class SigninForm(FlaskForm):

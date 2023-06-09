@@ -94,9 +94,9 @@ socket.on("driver_location_update", (data) => {
   } else {
     const marker = L.marker([latitude, longitude]).addTo(map);
     if (location === undefined){
-      marker.bindPopup(`Driver Name: ${name} is Active`).openPopup();
+      marker.bindPopup(`${name} `).openPopup();
     }else{
-      marker.bindPopup(`Driver Name: ${name} is in ${location}`).openPopup();
+      marker.bindPopup(`${name} is in ${location}`).openPopup();
     }
     driverMarkers[driver_id] = marker;
   }

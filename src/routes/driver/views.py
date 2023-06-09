@@ -21,23 +21,54 @@ def home():
     return render_template("driver/index.html", user=current_user)
 
 
-@driver_views.route("/profile", methods=["GET", "POST"])
-@login_required
-def profile():
-    form = UpdateForm()
-    if request.method == "GET":
-        form.firstname.data = current_user.firstname
-        form.lastname.data = current_user.lastname
-        form.phone.data = current_user.phone
-    return render_template("driver/profile.html", user=current_user, form=form)
-
-
-@driver_views.route("/drivers", methods=["GET", "POST"])
+@driver_views.route("/passengers", methods=["GET", "POST"])
 @login_required
 def passengers():
+    if current_user.role == "passenger":
+        return redirect(url_for("passenger_views.drivers"))
     passengers = storage.get_all_filtered_item("passenger", "status", True)
 
     return render_template("driver/passengers.html", passengers=passengers)
+
+
+@driver_views.route("/my-locations", methods=["GET", "POST"])
+@login_required
+def my_locations():
+    if current_user.role == "passenger":
+        return redirect(url_for("passenger_views.my_locations"))
+    user = storage.get_item("driver", current_user.id)
+
+    return render_template("driver/locations.html", user=user)
+
+
+# SET locations
+@socketio.on("set-default-location")
+def set_default_location(data):
+    user = storage.get_item("driver", current_user.id)
+    default = data["dlocation"]
+    if user and default != None:
+        user.location = default
+        storage.save()
+
+
+@socketio.on("set-start-location")
+def set_to_location(data):
+    user = storage.get_item("driver", current_user.id)
+    start = data["slocation"]
+    print(start)
+    if user and start != None:
+        user.start_loc = start
+        storage.save()
+
+
+@socketio.on("set-end-location")
+def set_from_location(data):
+    user = storage.get_item("driver", current_user.id)
+    end = data["elocation"]
+    print(end)
+    if user and end != None:
+        user.end_loc = end
+        storage.save()
 
 
 # show active passengers on driver map

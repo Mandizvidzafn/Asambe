@@ -119,6 +119,15 @@ img {
     margin-right: 22%;
 }
 
+
+.loc_name {
+ 
+    margin-right: 15px;
+    width: 120px;
+    text-align: center;
+
+}
+
 .location i {
     font-size: x-large;
     margin-left: 15px;
@@ -195,11 +204,18 @@ input:checked + .slider:before {
     margin-top: 60px;
 }
 
+li {
+    list-style-type: none;
+}
 
+.trans-type-right {
+    display: flex;
+    margin-top: 20px;
+}
 
 .trans-type{
-    width: 60%;
-    margin-top: 40px;
+    width: 350px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-around;
     text-align: center;
@@ -226,6 +242,7 @@ input:checked + .slider:before {
     margin: 0;
     z-index: 2;
     opacity: 0;
+    right: 6px;
 }
 
 .trans .radio-tile {
@@ -280,6 +297,7 @@ input:hover + .radio-tile {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-bottom: 50px;
 }
 
 .grouped {
@@ -291,7 +309,6 @@ input:hover + .radio-tile {
     box-shadow: 0 0 10px grey;
     border: 0;
     border-radius: 5px;
-    margin-bottom: 50px;
     padding-left: 12px;
     font-size: large;
 }
@@ -343,6 +360,10 @@ input:hover + .radio-tile {
 }
 
 .buttons {
-    margin-top: 40px;
+    margin-top: 75px;
 }
 
+
+.text-error {
+    color: rgb(247, 57, 57);
+}
