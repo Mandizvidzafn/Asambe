@@ -26,6 +26,13 @@
                     <div class="center-items">
                         <li>
                             {{form.otp(placeholder="Enter otp", class="otp")}}
+                            {% if form.otp.errors %}
+                                <ul id="otp-errorbox">
+                                    {% for error in form.otp.errors%}
+                                        <li class="error-text">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </li>
     
                         <li>
@@ -52,6 +59,26 @@
           // Redirect to the / URL
           window.location.href = "/";
         });
+
+        const otpInput = document.querySelector("#otp");
+        otpInput.addEventListener("input", () => {
+            const otpErrorBox = document.getElementById("otp-errorbox");
+            otpErrorBox.innerHTML = '';
+        });
+
+        //<!--Start of Tawk.to Script-->
+    
+            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/647cbcef7957702c744bb600/1h23k42fc';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+            })();
+        
+        //<!--End of Tawk.to Script-->
     </script>
 </body>
 </html>

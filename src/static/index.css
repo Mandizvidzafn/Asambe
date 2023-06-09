@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: url(./pexels-monstera-7411973.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+}
+
+header {
+    height: 60px;
+    background-color: white;
+    border: 0;
+    box-shadow: 4px 0 5px black;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    height: 40px;
+    width: 170px;
+    background-color: #000;
+    color: #fff;
+    font-size: large;
+    border-radius: 55px;
+}
+
+main {
+    position: relative;
+    margin-top: 20px;
+}
+
+.container-items {
+    height: 200vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    height: 200vh;
+}
+
+.intro {
+    width: 115vh;
+    height: 100vh;
+}
+
+.intro h1, .feature h1 {
+    color: white;
+    text-align: center;
+    font-size: 50px;
+    text-shadow: 0 0 15px black;
+    
+}
+
+.feature h1 {
+    text-shadow: 0 0 10px black;
+}
+
+.intro p, .feature p {
+    font-size: x-large;
+    text-align: center;
+    padding: 0 120px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+
+
+.feature {
+    height: 100vh;
+    width: 115vh;
+    text-align: center;
+}
+
+
+.fa-location-dot {
+    font-size: 30px;
+    margin-top: 180px;
+    margin-left: 13px;
+}
+
+
+.demo {
+    height: 60vh;
+    width: 80vh;
+    background-color: white;
+    position: sticky;
+    top: 10px;
+    border-radius: 15px;
+    right: 50px;
+}
+
+.demo iframe {
+    width: 80vh;
+    height: 60vh;
+    border-radius: 15px;
+    border-width: 0;
+}
+
+.about {
+    height: 100vh;
+}
+
+.about h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 80px;
+    text-shadow: 0 0 10px black;
+    
+}
+
+
+.first {
+   text-align: center; 
+   margin-left: 750px;
+   margin-right: 20px;
+   font-size: 20px;
+}
+
+.second {
+    text-align: center;
+    margin-top: 440px;
+    margin-left: 300px;
+    margin-right: 330px;
+    font-size: 20px;
+    color: #39312b;
+    font-weight: 600;
+}

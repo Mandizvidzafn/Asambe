@@ -122,4 +122,7 @@ class DB_Storage:
         """
         table_name = table.lower()
         if table_name in tables:
-            db.session.delete(item)
+            table_object = tables[table_name]
+            result = table_object.query.get(item)
+            if result:
+                db.session.delete(result)

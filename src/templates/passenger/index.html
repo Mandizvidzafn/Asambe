@@ -26,7 +26,11 @@
                         <input type="text" name="" class="" id="" placeholder="To">
                         <button class="plus-minus" id="minus"><i class="fa-solid fa-plus-minus"></i></i></button>
                     </div>
-                    
+                    <section id="popMenu">
+                        <h2>{{user.firstname}} {{user.lastname}}</h2>
+                        <button id="pop-profile-btn">Profile</button>
+                        <button id="pop-logout-btn">Logout</button>
+                    </section>
                     <!-- Bottom rich search -->
                     <div class="bottom" id="bottom">
                         <input type="text" name="" id="" placeholder="From">
@@ -98,10 +102,13 @@
             
 
             <ul class="views">
-                <li id="my-locations" class="links">
-                    <buttton class="icons"><i class="fa-solid fa-location-crosshairs"></i></buttton>
-                    <p>My locations</p>
-                </li>
+                <a href="{{url_for('passenger_views.my_locations')}}">
+                    <li id="my-locations" class="links">
+                        <buttton class="icons"><i class="fa-solid fa-location-crosshairs"></i></buttton>
+                        <p>My locations</p>
+                    </li>
+                </a>
+                
 
 
                <a href="{{url_for('passenger_views.drivers')}}">
@@ -131,7 +138,7 @@
                     <p>Settings</p>
                 </li> -->
 
-                <a href="{{url_for('passenger_views.profile')}}">
+                <a href="{{url_for('passenger_auth.profile')}}">
                     <li id="profile" class="links">
                         <buttton class="icons"><i class="fa-solid fa-user"></i></buttton>
                         <p>Profile</p>
@@ -153,6 +160,33 @@
         s1.setAttribute('crossorigin','*');
         s0.parentNode.insertBefore(s1,s0);
         })();
+
+        //user icon
+        const user_icon = document.getElementById("home-profile");
+        user_icon.addEventListener("mouseover", showMenuPopup);
+        document.getElementById("pop-profile-btn").addEventListener("mouseover", showMenuPopup);
+        document.getElementById("pop-logout-btn").addEventListener("mouseover", showMenuPopup);
+        document.getElementById("pop-profile-btn").addEventListener("click", () => {
+            window.location.href = "/passenger/profile"
+        });
+        document.getElementById("pop-logout-btn").addEventListener("click", () => {
+            window.location.href = "/signin/logout"
+        });
+
+ 
+        const menuPopup =document.getElementById("popMenu");
+        menuPopup.addEventListener("mouseout", hideMenuPopup);
+
+        function showMenuPopup() {
+            const menuPopup = document.getElementById("popMenu");
+            menuPopup.style.display = "block";
+        }
+
+        function hideMenuPopup() {
+            const menuPopup = document.getElementById("popMenu");
+            menuPopup.style.display = "none";
+        }
+
     </script>
     <!--End of Tawk.to Script-->
 </body>

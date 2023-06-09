@@ -70,9 +70,15 @@ ul {
 .password-wrapper span {
     position: absolute;
     right: 10px;
-    top: 50%;
+    top: 48%;
+    bottom: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
+}
+
+
+.text-error {
+    color: rgb(247, 57, 57);
 }
   
 .password-wrapper i.fa-eye,
@@ -159,3 +165,12 @@ a:hover {
     color: rgb(97, 95, 95);
     text-decoration: underline;
 }
+
+#phone {
+    width: 375px;
+    height: 50px;
+}
+
+.iti__country-list {
+    width: 375px !important;
+  }

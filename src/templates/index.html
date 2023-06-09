@@ -5,11 +5,109 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <header>
-        <a href="{{url_for('auth.signin')}}">signin</a>
-        <a href="{{url_for('views.signup')}}">signup</a>
+        <a href="{{url_for('auth.signin')}}">
+            <button>Sign in</button>
+        </a>
+        <a href="{{url_for('views.signup')}}">
+            <button>Sign up</button>
+        </a>
     </header>
+    <main>
+            <section class="container">
+                <div class="container-items">
+                    <div class="left">
+                        <div class="intro">
+                            <h1>Asambe</h1>
+                            <p>Asambe is a transportation platform designed to connect <br> users in remote areas or places with scarce transport options, providing them with information on available 
+                                transportation services through realtime mapping. 
+                                <br>
+                                <br>
+                                <br>
+                                It can be difficult to predict when transport will be available. This uncertainty can cause inconvenience and make it difficult to plan other activities.
+                                <br>
+                                <br>
+                                <br>
+                                To solve this problem, Asambe allows drivers to set an active status and share their
+                                live location on a map where passengers can view to see where the transport is and
+                                estimate when it will reach their location.
+                                <br>
+                                <br>
+                                <br>
+                                Overall, the Asambe app provides a convenient and reliable way for passengers to plan
+                                their travel and for drivers to optimize their operations. By leveraging the power of
+                                technology, the app can help make transport more accessible and efficient in areas where
+                                it's often a challenge
+                            </p>
+                        </div>
+                        <div class="feature">
+                            <h1>Features</h1>
+                            <ul>
+                                <li>
+                                    <p>As a driver, you can set your active status and share your live location on the map, 
+                                        so passengers can see your availability and location. This includes being able to toggle 
+                                        your active status on/off and having your location automatically updated on the map as you move.</p>
+                                </li>
+                                <li>
+                                    <p>As a commuter, you can view the live location of available drivers on a map, 
+                                        so you can estimate when a driver will reach ypur location and plan your travel accordingly. 
+                                        This includes seeing driver markers on the map with their real-time positions and relevant information.</p>
+                                </li>
+                                <li>
+                                    <p>
+                                        Commuters indicate their desire to travel to or from a location by setting their status to "I want to go," 
+                                    so drivers can see the number of commuters interested in traveling and their locations. 
+                                    This helps drivers decide whether it's worth operating and reduces waiting times for commuters.
+                                    </p>
+                                </li>
+                            </ul>
+                            <i class="fa-solid fa-location-dot fa-beat" style="color: #f10404;"></i>
+
+                        </div>
+                    </div>
+                    
+                    <div class="demo">
+                        <iframe src="{{url_for('static', filename='asambe-demo.mp4')}}" autoplay loop allowFullScreen></iframe>
+                    </div>
+                </div>
+            </section>
+            
+            
+        <section class="about">
+            <h1>About</h1>
+            <p class="first">
+                I was deeply moved by the overlooked challenges faced by rural communities and felt compelled to make a 
+                significant impact by leveraging my skills to bridge the gap between technology advancements and people living in remote areas. 
+                Through personal experiences in my home area, I witnessed the profound impact of limited access to public transportation. 
+                The scarcity of transport options meant that once a vehicle left a location, it would only return when it was full. 
+                Consequently, if there was no public transport available at the destination, individuals had to wait for the vehicle to fill up 
+                and return, causing delays and disruptions to their travel plans.
+            </p>
+            <p class="second"> 
+                These struggles became a catalyst for my realization that a solution was needed. I firmly believed that real-time mapping technology 
+                and a dedicated platform could revolutionize the way people in rural areas navigate and access essential services. By connecting individuals 
+                with available transportation options in their vicinity, this platform, which later became Asambe, aimed to alleviate the challenges they faced. 
+                It became my mission to empower rural communities by providing them with a reliable and efficient means of transportation, ensuring they could 
+                access vital services and opportunities without the limitations imposed by scarce public transport.
+        </section>
+
+    </main>
+        <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/647cbcef7957702c744bb600/1h23k42fc';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+        <!--End of Tawk.to Script-->
 </body>
 </html>

@@ -2,21 +2,25 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from os import path
 from flask_login import LoginManager
+from flask_migrate import Migrate
 from flask_socketio import SocketIO
 import os
 from dotenv import load_dotenv
 from sqlalchemy import text
 from flask_mail import Mail
-
+from flask_uploads import IMAGES, UploadSet, configure_uploads
 
 load_dotenv()
 
 login_manager = LoginManager()
 
+
+basedir = path.abspath(path.dirname(__file__))
 db_Name = "asambe"
 db = SQLAlchemy()
 socketio = SocketIO()
 mail = Mail()
+photos = UploadSet("photos", IMAGES)
 username = os.getenv("MysqlUSER")
 password = os.getenv("PASSWORD")
 
@@ -39,7 +43,13 @@ def create_app():
     app.config["MAIL_PASSWORD"] = "your_password"
     app.config["MAIL_DEFAULT_SENDER"] = "your_email@example.com"
 
+    # Photo uploads configuration
+    app.config["UPLOADED_PHOTOS_DEST"] = path.join(basedir, "static/img")
+    configure_uploads(app, photos)
+    app.config["MAX_CONTENT_LENGTH"] = 16 * 1000 * 1000
+
     # initializations
+    migrate = Migrate(app, db)
     db.init_app(app)
     socketio.init_app(app)
     mail.init_app(app)
@@ -101,10 +111,7 @@ def create_database(app):
         db.create_all()
 
         # Reset auto-increment values
-        db.session.execute(
-            text("ALTER TABLE driver AUTO_INCREMENT = 100, AUTO_INCREMENT = 2")
-        )
-        db.session.execute(
-            text("ALTER TABLE passenger AUTO_INCREMENT = 101, AUTO_INCREMENT = 2")
-        )
+        db.session.execute(text("ALTER TABLE driver AUTO_INCREMENT = 201;"))
+        db.session.execute(text("ALTER TABLE passenger AUTO_INCREMENT = 10000;"))
+        db.session.execute(text("SET @@auto_increment_increment = 2;"))
         db.session.commit()

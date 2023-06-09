@@ -16,49 +16,37 @@
         <table>
             <thead>
                 <tr>
-                    <th class="start">Name</th>
+                    <th class="start"></th>
+                    <th class="name">Name</th>
                     <th>Contact</th>
-                    <th>Lat</th>
-                    <th class="end">Long</th>
+                    <th>From</th>
+                    <th class="end">To</th>
                 </tr>
             </thead>
             <tbody>
+                {% for passenger in passengers %}
                 <tr>
-                    <td>Josh</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
+                    <td class="name-img"> 
+                        {% if passenger.profile_pic != 'default.jpg' %}
+                            <img src="{{url_for('static', filename='img/' ~ passenger.profile_pic)}}" alt="">
+                        {% else %}
+                            <img src="{{url_for('static', filename='default.jpg')}}" alt="">
+                        {% endif %}
+                    </td>
+                    {% if passenger.profile_visibility %}
+                        <td class="name"> {{ passenger.firstname }} {{ passenger.lastname }} </td>
+                    {% else %}
+                        <td class="name"> <h1>-</h1> </td>
+                    {% endif %}
+                    {% if passenger.number_visibility %}
+                        <td ><h1>-</h1></td>
+                    {% else %}
+                        <td> {{ passenger.phone }} </td>
+                    {% endif %}
+                    <td>{{passenger.from_loc}}</td>
+                    <td>{{passenger.to}}</td>
                 </tr>
-                <tr>
-                    <td>Josh</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
-                </tr>
-                <tr>
-                    <td>Josh</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
-                </tr>
-                <tr>
-                    <td>Josh</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
-                </tr>
-                <tr>
-                    <td>Josh</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
-                </tr>
-                <tr>
-                    <td>Josh</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
-                </tr>
+                {% endfor %}
             </tbody>
             <tfoot>
                 <tr>

@@ -7,6 +7,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='signin.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -18,7 +20,7 @@
             </div>
             <button class="close-btn" id="close-btn">&times;</button>
         </div>
-        <form action="" method="post">
+        <form action="" method="post" id="signin-form">
             {{ form.csrf_token }}
 
             <div class="center">
@@ -26,12 +28,30 @@
                     <div class="center-items">
                         <li>
                             {{form.phone(placeholder="Enter phone number", class="input")}}
+
+                            {% if form.phone.errors %}
+                                <ul id="phone-errorbox">
+                                    {% for error in form.phone.errors %}
+                                        <li class="text-error">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %} 
                         </li>
 
                         <li>
                             <div class="password-wrapper">
-                                {{ form.password(placeholder="Password", class="passwordInput mg-btm", id="password-input") }}
+                                <div class="passwd">
+                                    {{ form.password(placeholder="Password", class="passwordInput mg-btm", id="password-input") }}
+                                    {% if form.password.errors %}
+                                    <ul id="password-errorbox">
+                                        {% for error in form.password.errors %}
+                                            <li class="text-error">{{error}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                </div>
                                 <span><i class="fa-solid fa-eye" id="showPassword"></i></span>
+                                
                             </div>
                         </li>
                         
@@ -75,6 +95,44 @@
         document.getElementById("close-btn").addEventListener("click", function() {
           // Redirect to the / URL
           window.location.href = "/";
+        });
+
+
+        //Add event listener the phone box 
+        const phoneInput = document.querySelector("#phone");
+        phoneInput.addEventListener("input", () => {
+            const phoneErrorBox = document.getElementById("phone-errorbox");
+            phoneErrorBox.innerHTML = '';
+        });
+
+        //Add event listener the passwd box 
+        passwordInput.addEventListener("input", () => {
+            const passwdErrorBox = document.getElementById("password-errorbox");
+            passwdErrorBox.innerHTML = '';
+        });
+
+        //For the Int phone format
+        window.intlTelInput(phoneInput, {
+            preferredCountries: ["za"],
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+        });
+
+        // for int phone format
+        const signinForm = document.querySelector("#signin-form");
+
+        // Add event listener to the signup form submission
+        signinForm.addEventListener("submit", function(event) {
+            const phoneInput = document.querySelector("#phone");
+            const iti = window.intlTelInputGlobals.getInstance(phoneInput);
+            const phoneNumber = iti.getNumber();
+        
+            // Assign the value of phoneNumber to form.phone.data
+            phoneInput.value = phoneNumber;
+            console.log('phone')
+            console.log(phoneInput)
+        
+            // Submit the form
+            siginForm.submit();
         });
     </script>
 </body>

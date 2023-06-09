@@ -16,60 +16,36 @@
         <table>
             <thead>
                 <tr>
-                    <th class="start">Name</th>
+                    <td class="start"></td>
+                    <th >Name</th>
                     <th>Vehicle Type</th>
                     <th>Contact</th>
-                    <th>Lat</th>
-                    <th class="end">Long</th>
+                    <th>Starting Point</th>
+                    <th class="end">Ending Point</th>
                 </tr>
             </thead>
             <tbody>
+                {% for driver in drivers %}
                 <tr>
-                    <td>Josh</td>
-                    <td>bus</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
+                    <td class="name-img"> 
+                        {% if driver.profile_pic != 'default.jpg' %}
+                            <img src="{{url_for('static', filename='img/' ~ driver.profile_pic)}}" alt="">
+                        {% else %}
+                            <img src="{{url_for('static', filename='default.jpg')}}" alt="">
+                        {% endif %}
+                    </td>
+                    <td>{{ driver.firstname }} {{ driver.lastname }} </td>
+                    <td>{{ driver.vehicle_type }}</td>
+                    <td>{{driver.phone}}</td>
+                    <td>{{driver.start_loc}}</td>
+                    <td>{{driver.end_loc}}8</td>
                 </tr>
-                <tr>
-                    <td>Josh</td>
-                    <td>bus</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
-                </tr>
-                <tr>
-                    <td>Josh</td>
-                    <td>bus</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
-                </tr>
-                <tr>
-                    <td>Josh</td>
-                    <td>bus</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
-                </tr>
-                <tr>
-                    <td>Josh</td>
-                    <td>bus</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
-                </tr>
-                <tr>
-                    <td>Josh</td>
-                    <td>bus</td>
-                    <td>+271234567</td>
-                    <td>-1284.83739</td>
-                    <td>423.08378</td>
-                </tr>
+                {% endfor %}
+                
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5">Asambe</td>
+                    <td colspan="6">Asambe</td>
                 </tr>
             </tfoot>
         </table>

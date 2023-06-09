@@ -26,6 +26,8 @@ header h1{
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 td {
@@ -71,3 +73,23 @@ tbody tr:nth-child(even) {
 tbody tr:nth-child(odd) {
    font-weight: 550;
 }
+
+tfoot {
+    font-size: large;
+    font-weight: 600;
+}
+
+img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.name-img {
+    display: flex;
+    margin-top: 6px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+

@@ -35,9 +35,49 @@ def profile():
 @passenger_views.route("/drivers", methods=["GET", "POST"])
 @login_required
 def drivers():
+    if current_user.role == "driver":
+        return redirect(url_for("driver_views.passengers"))
     drivers = storage.get_all_filtered_item("driver", "active", True)
 
     return render_template("passenger/drivers.html", drivers=drivers)
+
+
+@passenger_views.route("/my-locations", methods=["GET", "POST"])
+@login_required
+def my_locations():
+    if current_user.role == "driver":
+        return redirect(url_for("driver_views.my_locations"))
+    user = storage.get_item("passenger", current_user.id)
+
+    return render_template("passenger/locations.html", user=user)
+
+
+# SET locations
+@socketio.on("set-default-location")
+def set_default_location(data):
+    user = storage.get_item("passenger", current_user.id)
+    default = data["dlocation"]
+    if user and default != None:
+        user.location = default
+        storage.save()
+
+
+@socketio.on("set-to-location")
+def set_to_location(data):
+    user = storage.get_item("passenger", current_user.id)
+    to = data["tlocation"]
+    if user and to != None:
+        user.to = to
+        storage.save()
+
+
+@socketio.on("set-from-location")
+def set_from_location(data):
+    user = storage.get_item("passenger", current_user.id)
+    from_ = data["flocation"]
+    if user and from_ != None:
+        user.from_loc = from_
+        storage.save()
 
 
 # show active drivers on passenger map

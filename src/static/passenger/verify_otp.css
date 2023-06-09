@@ -105,3 +105,6 @@ footer {
     margin-bottom: 10px;
 }
 
+.error-text {
+    color: rgb(247, 57, 57);
+}
