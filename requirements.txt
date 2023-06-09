@@ -41,6 +41,7 @@ mysql-connector-python==8.0.33
 mysqlclient==2.1.1
 packaging==23.1
 pathspec==0.11.1
+Pillow==9.5.0
 platformdirs==3.5.1
 protobuf==3.20.3
 PyJWT==2.7.0
