@@ -4,6 +4,7 @@ from os import path
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_socketio import SocketIO
+from flask_cors import CORS
 import os
 from dotenv import load_dotenv
 from sqlalchemy import text
@@ -49,6 +50,7 @@ def create_app():
     app.config["MAX_CONTENT_LENGTH"] = 16 * 1000 * 1000
 
     # initializations
+    cors = CORS(app, origins="https://asambe.ncebamandizvidza.com")
     migrate = Migrate(app, db)
     db.init_app(app)
     socketio.init_app(app)
