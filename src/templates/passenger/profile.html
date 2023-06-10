@@ -216,7 +216,15 @@
             confirmpasswdErrorBox.innerHTML = '';
         });
 
-
+         //Delte account
+         document.getElementById("delete-account-btn").addEventListener("click", () => {
+            let verify = confirm("Are you sure you want to delete your account")
+            if (verify){
+                clicked = true
+                socket.emit("delete-passenger-account", {clicked})
+                window.location.href = '/'
+            }
+        });
          
       </script>
 </body>
