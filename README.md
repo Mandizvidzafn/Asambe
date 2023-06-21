@@ -18,7 +18,7 @@ https://asambe.ncebamandizvidza.com
 - Flask
 - Mysql
 - SocketIO
-- Nginx
+- Nginx (web server)
 - Gunicorn
 - Debain Server
 ### To be incorporated in the future
@@ -26,3 +26,4 @@ https://asambe.ncebamandizvidza.com
 - Docker
 - CI/CD pipeline
 - React
+- HaProxy (if the user base increses)
