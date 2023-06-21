@@ -9,7 +9,19 @@ https://asambe.ncebamandizvidza.com
 * [Project MVP](https://docs.google.com/document/d/12ztBlh7bujGghwmrGDVCmwmmi_XplogbblYG4H5jv6c/edit?usp=sharing)
 - [Trello Board](https://trello.com/invite/b/gOsYnvYV/ATTI07686ad251a97662b870c7df74565bcbF0DCE265/asambe-web-app)
 
-## Technologies
+## Technologies 
+### Used
 - HTML/CSS/JavaScript
 - Leaflet API (for maps)
-
+- Python
+- Flask
+- Mysql
+- SocketIO
+- Nginx
+- Gunicorn
+- Debain Server
+### To be incorporated in the future
+- Pytest with selenium
+- Docker
+- Ci/CD pipeline
+- React
