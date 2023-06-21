@@ -23,5 +23,5 @@ https://asambe.ncebamandizvidza.com
 ### To be incorporated in the future
 - Pytest with selenium
 - Docker
-- Ci/CD pipeline
+- CI/CD pipeline
 - React
