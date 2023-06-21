@@ -16,6 +16,7 @@ https://asambe.ncebamandizvidza.com
 - Twilio API
 - Python
 - Flask
+- SQLAlchemy
 - Mysql
 - SocketIO
 - Nginx (web server)
