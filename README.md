@@ -26,4 +26,4 @@ https://asambe.ncebamandizvidza.com
 - Docker
 - CI/CD pipeline
 - React
-- HaProxy (if the user base increses)
+- HaProxy (if the user base increases)
