@@ -13,6 +13,7 @@ https://asambe.ncebamandizvidza.com
 ### Used
 - HTML/CSS/JavaScript
 - Leaflet API (for maps)
+- Twilio API
 - Python
 - Flask
 - Mysql
