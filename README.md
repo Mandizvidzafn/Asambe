@@ -28,3 +28,4 @@ https://asambe.ncebamandizvidza.com
 - CI/CD pipeline
 - React
 - HaProxy (if the user base increases)
+- [ ] Make it responsive
