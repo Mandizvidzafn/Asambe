@@ -3,3 +3,6 @@ Connecting rural communities with reliable transportation through real-time mapp
 
 ## Live Demo
 https://asambe.ncebamandizvidza.com
+
+## Insights abouth project
+[Project Research part1](https://docs.google.com/document/d/1MW7GNNOZ4nSLKLPp1TL1TSaqwH89TCk-Hl2CDyiKEZU/edit?usp=sharing)
