@@ -16,6 +16,7 @@ https://asambe.ncebamandizvidza.com
 - Twilio API
 - Python
 - Flask
+- SQLAlchemy
 - Mysql
 - SocketIO
 - Nginx (web server)
@@ -27,3 +28,4 @@ https://asambe.ncebamandizvidza.com
 - CI/CD pipeline
 - React
 - HaProxy (if the user base increases)
+- [ ] Make it responsive
