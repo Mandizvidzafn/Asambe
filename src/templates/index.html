@@ -1,113 +1,427 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asambe</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asambe | Move Together, Smarter</title>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
+  <link rel='stylesheet' href='{{ url_for("static", filename="bootstrap-5.3.3-dist/css/bootstrap.min.css" )}}'>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='index.css')}}"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    /* Base and body */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #000;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #000 !important;
+    }
+    .navbar .navbar-brand,
+    .navbar .nav-link {
+      color: #fff !important;
+    }
+    .navbar .nav-link:hover {
+      color: #ccc !important;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url('https://source.unsplash.com/1600x900/?road,city,transport');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background-color: #000;
+      border-color: #000;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background-color: #333;
+      border-color: #333;
+      color: #fff;
+    }
+    .btn-outline-primary {
+      color: #000;
+      border-color: #000;
+    }
+    .btn-outline-primary:hover {
+      background-color: #000;
+      color: #fff;
+    }
+    .btn-light {
+      background-color: #fff;
+      color: #000;
+      border-color: #000;
+    }
+    .btn-light:hover {
+      background-color: #eee;
+    }
+
+    /* Section backgrounds */
+    section.bg-light {
+      background-color: #fff !important;
+    }
+    section.bg-white {
+      background-color: #fff !important;
+    }
+    section.bg-dark {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+
+    /* Cards */
+    .card {
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #ddd;
+    }
+    .card.bg-dark {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+
+    /* Section dividers */
+    .section-divider {
+      height: 3px;
+      width: 80px;
+      background-color: #000;
+      margin: 1rem auto 2rem;
+    }
+
+   
+
+    /* Icon boxes */
+    .icon-box {
+      font-size: 3rem;
+      color: #000;
+      margin-bottom: 1rem;
+    }
+
+    /* Arrows in Why Asambe Was Built */
+    .text-primary {
+      color: #000 !important;
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+    }
+
+    /* Transport card hover effect */
+    .transport-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-color: #fff !important;
+      padding-top: 5px;
+    }
+    .transport-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    }
+
+    i {
+	max-width: 50px;
+	max-height: 50px;
+    }
+
+  </style>
 </head>
 <body>
-    <header>
-        <a href="{{url_for('auth.signin')}}">
-            <button>Sign in</button>
-        </a>
-        <a href="{{url_for('views.signup')}}">
-            <button>Sign up</button>
-        </a>
-    </header>
-    <main>
-            <section class="container">
-                <div class="container-items">
-                    <div class="left">
-                        <div class="intro">
-                            <h1>Asambe</h1>
-                            <p>Asambe is a transportation platform designed to connect <br> users in remote areas or places with scarce transport options, providing them with information on available 
-                                transportation services through realtime mapping. 
-                                <br>
-                                <br>
-                                <br>
-                                It can be difficult to predict when transport will be available. This uncertainty can cause inconvenience and make it difficult to plan other activities.
-                                <br>
-                                <br>
-                                <br>
-                                To solve this problem, Asambe allows drivers to set an active status and share their
-                                live location on a map where passengers can view to see where the transport is and
-                                estimate when it will reach their location.
-                                <br>
-                                <br>
-                                <br>
-                                Overall, the Asambe app provides a convenient and reliable way for passengers to plan
-                                their travel and for drivers to optimize their operations. By leveraging the power of
-                                technology, the app can help make transport more accessible and efficient in areas where
-                                it's often a challenge
-                            </p>
-                        </div>
-                        <div class="feature">
-                            <h1>Features</h1>
-                            <ul>
-                                <li>
-                                    <p>As a driver, you can set your active status and share your live location on the map, 
-                                        so passengers can see your availability and location. This includes being able to toggle 
-                                        your active status on/off and having your location automatically updated on the map as you move.</p>
-                                </li>
-                                <li>
-                                    <p>As a commuter, you can view the live location of available drivers on a map, 
-                                        so you can estimate when a driver will reach ypur location and plan your travel accordingly. 
-                                        This includes seeing driver markers on the map with their real-time positions and relevant information.</p>
-                                </li>
-                                <li>
-                                    <p>
-                                        Commuters indicate their desire to travel to or from a location by setting their status to "I want to go," 
-                                    so drivers can see the number of commuters interested in traveling and their locations. 
-                                    This helps drivers decide whether it's worth operating and reduces waiting times for commuters.
-                                    </p>
-                                </li>
-                            </ul>
-                            <i class="fa-solid fa-location-dot fa-beat" style="color: #f10404;"></i>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">Asambe</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#transport">Modes</a></li>
+	  <li class="nav-item"><a class="nav-link" href="{{url_for('auth.signin')}}">Sign In</a></li>
+	  <li class="nav-item"><a class="nav-link" href="{{url_for('views.signup')}}">Sign Up</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-                        </div>
-                    </div>
-                    
-                    <div class="demo">
-                        <iframe src="{{url_for('static', filename='asambe-demo.mp4')}}" autoplay loop allowFullScreen></iframe>
-                    </div>
-                </div>
-            </section>
-            
-            
-        <section class="about">
-            <h1>About</h1>
-            <p class="first">
-                I was deeply moved by the overlooked challenges faced by rural communities and felt compelled to make a 
-                significant impact by leveraging my skills to bridge the gap between technology advancements and people living in remote areas. 
-                Through personal experiences in my home area, I witnessed the profound impact of limited access to public transportation. 
-                The scarcity of transport options meant that once a vehicle left a location, it would only return when it was full. 
-                Consequently, if there was no public transport available at the destination, individuals had to wait for the vehicle to fill up 
-                and return, causing delays and disruptions to their travel plans.
-            </p>
-            <p class="second"> 
-                These struggles became a catalyst for my realization that a solution was needed. I firmly believed that real-time mapping technology 
-                and a dedicated platform could revolutionize the way people in rural areas navigate and access essential services. By connecting individuals 
-                with available transportation options in their vicinity, this platform, which later became Asambe, aimed to alleviate the challenges they faced. 
-                It became my mission to empower rural communities by providing them with a reliable and efficient means of transportation, ensuring they could 
-                access vital services and opportunities without the limitations imposed by scarce public transport.
-        </section>
+  <section class="hero">
+    <div class="container">
+      <h1 class="display-4 fw-bold" data-aos="fade-up">Move Together, Smarter with Asambe</h1>
+      <p class="lead" data-aos="fade-up" data-aos-delay="300">Real-time, location-based transport coordination for Riders and Drivers</p>
+      <a href="#signup" class="btn btn-primary btn-lg mt-3" data-aos="zoom-in" data-aos-delay="600">Get Started</a>
+    </div>
+  </section>
 
-    </main>
-        <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://embed.tawk.to/647cbcef7957702c744bb600/1h23k42fc';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-        })();
-    </script>
-        <!--End of Tawk.to Script-->
+  <section id="about" class="py-5 bg-white">
+    <div class="container">
+      <h2 class="fw-bold text-center mb-4">What is Asambe?</h2>
+      <div class="section-divider"></div>
+      <p class="text-center lead mb-5" data-aos="fade-in" data-aos-delay="100">
+        Asambe is a transportation platform designed to connect users in remote areas or places with scarce transport options,
+        providing them with information on available transportation services through realtime mapping.
+      </p>
+
+      <div class="row text-center">
+        <div class="col-md-4 mb-4" data-aos="zoom-in">
+          <div class="card border-0 shadow h-100">
+            <div class="card-body">
+              <h5 class="fw-bold">Transport Uncertainty</h5>
+              <p>It can be difficult to predict when transport will be available. This uncertainty makes it hard to plan daily activities.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="card border-0 shadow h-100 bg-light">
+            <div class="card-body">
+              <h5 class="fw-bold">Driver Location Sharing</h5>
+              <p>Drivers can set their status as active and share live locations, visible on a community-wide transport map.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="card border-0 shadow h-100">
+            <div class="card-body">
+              <h5 class="fw-bold">Smarter Planning</h5>
+              <p>Asambe allows passengers to track availability and routes, helping them plan travel more efficiently.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about py-5 bg-white text-dark">
+    <div class="container">
+      <h2 class="fw-bold text-center">Why Asambe Was Built</h2>
+      <div class="section-divider"></div>
+      <div class="row justify-content-center align-items-center text-center">
+        <div class="col-md-3 mb-4">
+          <div class="card shadow h-100 border-0">
+            <div class="card-body">
+              <h5 class="fw-bold">Scarcity of Transport</h5>
+              <p class="mb-0">Rural areas had inconsistent and unpredictable transport, making travel unreliable.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center">
+          <span class="display-6 text-primary">&rarr;</span>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <div class="card shadow h-100 border-0 bg-dark text-white">
+            <div class="card-body">
+              <h5 class="fw-bold">Broadcast Demand</h5>
+              <p class="mb-0">Enable commuters to share their intent to travel to help drivers decide when to operate.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center">
+          <span class="display-6 text-primary">&rarr;</span>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <div class="card shadow h-100 border-0">
+            <div class="card-body">
+              <h5 class="fw-bold">Lack of Visibility</h5>
+              <p class="mb-0">Passengers had no real-time updates on driver whereabouts or availability.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center">
+          <span class="display-6 text-primary">&rarr;</span>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <div class="card shadow h-100 border-0 bg-dark text-white">
+            <div class="card-body">
+              <h5 class="fw-bold">Live Mapping</h5>
+              <p class="mb-0">Implemented a live map for drivers to share real-time locations with users.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center">
+          <span class="display-6 text-primary">&rarr;</span>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <div class="card shadow h-100 border-0">
+            <div class="card-body">
+              <h5 class="fw-bold">Trust Barriers</h5>
+              <p class="mb-0">Users needed a secure and reliable way to access and verify services.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center">
+          <span class="display-6 text-primary">&rarr;</span>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <div class="card shadow h-100 border-0 bg-dark text-white">
+            <div class="card-body">
+              <h5 class="fw-bold">Twilio Verification</h5>
+              <p class="mb-0">Secured user identity with phone-based authentication for safer interactions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <!-- First demo option design
+  <section class="py-5">
+    <div class="container-sm text-center">
+      <h2 class="fw-bold">Live Demo Preview</h2>
+      <div class="section-divider"></div>
+      <iframe src="{{url_for('static', filename='asambe-demo.mp4')}}" autoplay loop allowfullscreen></iframe>
+    </div>
+  </section>
+ -->
+
+ <!-- second live demo design -->
+ <section class="py-5">
+  <div class="container text-center" style="max-width: 800px;">
+    <h2 class="fw-bold">Demo Preview</h2>
+    <div class="section-divider" ></div>
+    <video controls autoplay loop muted playsinline class="shadow-lg" style="width: 100%; height: 450px; object-fit: cover; border: 2px solid; border-radius: 8px;">
+      <source src="{{ url_for('static', filename='asambe-demo.mp4') }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</section>
+
+
+  <section id="features" class="py-5 bg-white">
+    <div class="container">
+      <h2 class="fw-bold text-center">Key Features</h2>
+      <div class="section-divider"></div>
+      <div class="row text-center">
+        <div class="col-md-4 mb-4" data-aos="fade-up">
+          <div class="icon-box">📍</div>
+          <h5>Live Geolocation</h5>
+          <p>Drivers can toggle availability and share live positions; commuters track them in real-time.</p>
+        </div>
+        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="icon-box">👥</div>
+          <h5>Commuter Intent</h5>
+          <p>Passengers express intent to travel so drivers see where demand exists before committing to operate.</p>
+        </div>
+        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="400">
+          <div class="icon-box">🔐</div>
+          <h5>Secure Verification</h5>
+          <p>Phone number verification powered by Twilio ensures secure access for all users.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="transport" class="bg-white py-5">
+    <div class="container">
+      <h2 class="fw-bold text-center mb-5">How You Get There is Up to You</h2>
+      <div class="section-divider"></div>
+      <div class="row text-center">
+        <div class="col-md-3 mb-4" data-aos="zoom-in">
+          <div class="card transport-card shadow-sm">
+          <i class="fa-solid fa-truck-front fa-2x" class="card-img-top" alt="Van"></i>
+            <div class="card-body">
+              <h5 class="card-title">Van</h5>
+              <p class="card-text">Perfect for transporting bulky baggage and moving items distances.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="card transport-card shadow-sm">
+            <i class="fa-solid fa-van-shuttle fa-2x" class="card-img-top" alt="Taxi"></i>
+            <div class="card-body">
+              <h5 class="card-title">Taxi</h5>
+              <p class="card-text">Ideal for small groups. Comfortable seating for multiple passengers.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="card transport-card shadow-sm">
+	    <i class="fa-solid fa-bus fa-2x" class="card-img-top" alt="Bus"></i>
+            <div class="card-body">
+              <h5 class="card-title">Bus</h5>
+              <p class="card-text">Economical rides with more seating capacity.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-4" data-aos="zoom-in" data-aos-delay="300">
+          <div class="card transport-card shadow-sm">
+            <i class="fa-solid fa-truck fa-2x" class="card-img-top" alt="Quza"></i>
+            <div class="card-body">
+              <h5 class="card-title">Quza</h5>
+              <p class="card-text">Flexible urban and peri-urban group transport.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="signin" class="py-5">
+    <div class="container text-center">
+      <h2 class="fw-bold">Already have an account?</h2>
+      <p>Sign in as a Rider or Driver</p>
+      <a href="{{url_for('auth.signin')}}" class="btn btn-outline-primary">Sign In</a>
+    </div>
+  </section>
+
+  <section id="signup" class="py-5 bg-dark text-white">
+    <div class="container text-center">
+      <h2 class="fw-bold">New here?</h2>
+      <p>Join Asambe today and choose your role</p>
+      <a href="{{url_for('views.signup')}}" class="btn btn-light">Sign Up</a>
+    </div>
+  </section>
+
+  <footer class="bg-black text-white text-center py-3">
+    <div class="container">
+      <p class="mb-0">&copy; 2025 Asambe | Built with Flask, Socket.IO & Twilio</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
+  <!-- Tawk.to Live Chat -->
+  <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/647cbcef7957702c744bb600/1h23k42fc';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+  </script>
 </body>
 </html>
+

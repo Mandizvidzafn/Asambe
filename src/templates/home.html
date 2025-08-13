@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='home.css')}}">
+    <title>Document</title>
+
+    <style>
+        
+    </style>
+
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Asambe</h1>
+        </div>
+        <div class="nav">
+            <a href="{{url_for('auth.signin')}}">
+                <button>Sign in</button>
+            </a>
+            <a href="{{url_for('views.signup')}}">
+                <button>Sign up</button>
+            </a>
+        </div>
+        
+    </header>
+    <div class="text-container">
+        <div class="text-content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum, magna vel malesuada varius, dui justo luctus eros, ac fermentum dui nisl at est. 
+            Duis varius ex non gravida posuere. Aenean auctor est eu massa dignissim, sit amet gravida turpis posuere. 
+            Cras vulputate viverra sem nec gravida. Sed ut leo a elit lacinia gravida. Suspendisse ac odio ac lectus congue tincidunt. 
+            Fusce hendrerit dictum lacinia. Ut suscipit ultricies dui vitae tempor. Praesent a venenatis justo. 
+            Morbi at sollicitudin dui. Ut efficitur id nisi ut venenatis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; 
+            Etiam id est id leo convallis tincidunt. Sed sed sem varius, rhoncus ligula et, iaculis nisi. 
+            Integer at felis quis felis egestas scelerisque. Curabitur sagittis velit a congue vestibulum. 
+            Donec luctus, orci at feugiat aliquet, ex orci fermentum orci, quis varius justo orci et eros.
+        </div>
+    </div>
+
+    <div class="text-container" style="top: 4rem;">
+        <div class="text-content">
+            <p class="first" style="padding: 0; margin: 0;">
+                I was deeply moved by the overlooked challenges faced by rural communities and felt compelled to make a 
+                significant impact by leveraging my skills to bridge the gap between technology advancements and people living in remote areas. 
+                Through personal experiences in my home area, I witnessed the profound impact of limited access to public transportation. 
+                The scarcity of transport options meant that once a vehicle left a location, it would only return when it was full. 
+                Consequently, if there was no public transport available at the destination, individuals had to wait for the vehicle to fill up 
+                and return, causing delays and disruptions to their travel plans.
+            </p>
+            <p class="second"> 
+                These struggles became a catalyst for my realization that a solution was needed. I firmly believed that real-time mapping technology 
+                and a dedicated platform could revolutionize the way people in rural areas navigate and access essential services. By connecting individuals 
+                with available transportation options in their vicinity, this platform, which later became Asambe, aimed to alleviate the challenges they faced. 
+                It became my mission to empower rural communities by providing them with a reliable and efficient means of transportation, ensuring they could 
+                access vital services and opportunities without the limitations imposed by scarce public transport.
+            </p>
+        </div>
+    </div>
+</body>
+</html> 
