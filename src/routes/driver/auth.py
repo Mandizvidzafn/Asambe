@@ -127,10 +127,10 @@ def signup_verify_otp():
                 storage.save()
                 session.clear()
                 login_user(new_user, remember=True)
-                return redirect(url_for("passenger_views.home"))
+                return redirect(url_for("driver_views.home"))
             else:
                 flash("Wrong OTP")
-    return render_template("passenger/verify_otp.html", form=form)
+    return render_template("driver/verify_otp.html", form=form)
 
 
 @driver_auth.route("/retrieve-password", methods=["GET", "POST"])

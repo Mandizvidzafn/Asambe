@@ -1,0 +1,54 @@
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid #000;
+}
+
+header a {
+    border: 1px solid red;
+}
+header h1 {
+    margin: 0;
+}
+
+.text-container {
+    position: relative;
+    width: 450px; /* Adjust as needed */
+    overflow: hidden;
+    cursor: pointer;
+    transition: height 0.3s ease;
+    border: solid 2px red;
+}
+
+.text-content {
+    max-height: 4.5em; /* Approximately 3 lines */
+    overflow: hidden;
+    box-sizing: border-box;
+    line-height: 1.5em; /* Adjust based on your font size */
+    position: relative;
+    transition: max-height 0.3s ease; /* Smooth transition */
+}
+
+.text-container:hover .text-content {
+    max-height: 100em; /* Arbitrarily large value to show all text */
+}
+
+/* Optional: Adding ellipsis for cut-off text */
+.text-content:after {
+    content: '...'; 
+    position: absolute; 
+    bottom: 0; 
+    right: 0;
+    background: white; /* Match background color */
+}
+
+.text-content:hover:after {
+    content: ''; /* Remove ellipsis on hover */
+}

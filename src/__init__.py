@@ -10,6 +10,8 @@ from dotenv import load_dotenv
 from sqlalchemy import text
 from flask_mail import Mail
 from flask_uploads import IMAGES, UploadSet, configure_uploads
+from flask_restx import Api
+#from .api.driver.views import driver_views_ns
 
 load_dotenv()
 
@@ -24,6 +26,7 @@ mail = Mail()
 photos = UploadSet("photos", IMAGES)
 username = os.getenv("MysqlUSER")
 password = os.getenv("PASSWORD")
+#api = Api(doc="/api")
 
 
 def create_app():
@@ -57,6 +60,7 @@ def create_app():
     mail.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = "auth.signin"
+    #api.init_app(app)
 
     # Models
     from .models.passenger import Passenger
@@ -95,6 +99,9 @@ def create_app():
     app.register_blueprint(admin_auth)
     app.register_blueprint(auth)
     app.register_blueprint(views)
+
+    #api.add_namespace(driver_views_ns)
+
 
     return app
 

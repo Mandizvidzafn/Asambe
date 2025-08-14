@@ -1,7 +1,7 @@
 import eventlet
-from src import create_app, socketio
-
 eventlet.monkey_patch(socket=False)
+
+from src import create_app, socketio
 
 app = create_app()
 
