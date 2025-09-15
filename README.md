@@ -93,7 +93,7 @@ To be incooperated:
 - **Load balancing / Scaling**: HaProxy / Kubernetes
 - **CI/CD pipeline**: Jenkins 
 ---
-- **Web Server**: Nginx 
+
 ## 🛠️ Installation
 
 1. Clone the repository:
