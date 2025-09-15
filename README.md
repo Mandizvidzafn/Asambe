@@ -41,7 +41,7 @@ Before development, research was conducted on:
 ### [Project MVP link](https://docs.google.com/document/d/12ztBlh7bujGghwmrGDVCmwmmi_XplogbblYG4H5jv6c/edit?usp=sharing)
 The Minimum Viable Product includes:  
 - Rider and driver dashboards  
-- Real-time ride booking and tracking  
+- Real time ride booking and tracking  
 - Notifications via SMS  
 - Multi-transport options  
 - Basic web interface with map integration  
@@ -69,7 +69,7 @@ Track project progress and tasks here:
 **Landing Page**  
 ![Landing Page ](src/static/images/index.png)
 
-**Driver Dashboard**  
+**Driver SignUp Page**  
 ![Driver Sign up page](src/static/images/driver-su.png)
 
 **Demo Preview**  
@@ -86,10 +86,14 @@ Track project progress and tasks here:
 - **Database**: MySQL  
 - **Real-time**: SocketIO  
 - **Web Server**: Nginx  
-- **Application Server**: Gunicorn    
+- **Application Server**: Gunicorn
+- **Containerization**: Docker    
 
+To be incooperated:
+- **Load balancing / Scaling**: HaProxy / Kubernetes
+- **CI/CD pipeline**: Jenkins 
 ---
-
+- **Web Server**: Nginx 
 ## 🛠️ Installation
 
 1. Clone the repository:
@@ -97,5 +101,5 @@ Track project progress and tasks here:
 ```bash
 git clone https://github.com/yourusername/asambe.git
 cd asambe
-pip install -r requirement.txt
+pip install -r requirements.txt
 python app.py
