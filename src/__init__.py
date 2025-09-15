@@ -26,6 +26,7 @@ mail = Mail()
 photos = UploadSet("photos", IMAGES)
 username = os.getenv("MysqlUSER")
 password = os.getenv("PASSWORD")
+host = os.getenv("HOST")
 #api = Api(doc="/api")
 
 
@@ -35,7 +36,7 @@ def create_app():
     # Database configuration
     app.config[
         "SQLALCHEMY_DATABASE_URI"
-    ] = f"mysql://{username}:{password}@localhost/{db_Name}"
+    ] = f"mysql+mysqlconnector://{username}:{password}@{host}/{db_Name}?ssl_disabled=true"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SECRET_KEY"] = "hehehehehe"
 
@@ -109,7 +110,7 @@ def create_app():
 def create_database(app):
     import mysql.connector
 
-    mydb = mysql.connector.connect(host="localhost", user=username, password=password)
+    mydb = mysql.connector.connect(host=host, user=username, password=password, ssl_disabled=True)
     my_cursor = mydb.cursor()
     my_cursor.execute(f"CREATE DATABASE IF NOT EXISTS {db_Name}")
     my_cursor.close()
