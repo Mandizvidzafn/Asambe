@@ -28,7 +28,7 @@ Asambe aims to provide a **reliable, scalable, and user-friendly transportation 
 ---
 
 ## 📚 Project Research
-### [Project Research](https://docs.google.com/document/d/1MW7GNNOZ4nSLKLPp1TL1TSaqwH89TCk-Hl2CDyiKEZU/edit?usp=sharing)
+### [Project Research link](https://docs.google.com/document/d/1MW7GNNOZ4nSLKLPp1TL1TSaqwH89TCk-Hl2CDyiKEZU/edit?usp=sharing)
 Before development, research was conducted on:  
 - Existing ride-hailing platforms and their features  
 - Common challenges in ride allocation and tracking  
@@ -38,7 +38,7 @@ Before development, research was conducted on:
 ---
 
 ## 🚀 Project MVP
-* [Project MVP](https://docs.google.com/document/d/12ztBlh7bujGghwmrGDVCmwmmi_XplogbblYG4H5jv6c/edit?usp=sharing)
+### [Project MVP link](https://docs.google.com/document/d/12ztBlh7bujGghwmrGDVCmwmmi_XplogbblYG4H5jv6c/edit?usp=sharing)
 The Minimum Viable Product includes:  
 - Rider and driver dashboards  
 - Real-time ride booking and tracking  
@@ -51,7 +51,7 @@ The Minimum Viable Product includes:
 ## 📋 Trello Board
 
 Track project progress and tasks here:  
-[Trello Board Link](https://trello.com/invite/b/gOsYnvYV/ATTI07686ad251a97662b870c7df74565bcbF0DCE265/asambe-web-app)
+### [Trello Board Link](https://trello.com/invite/b/gOsYnvYV/ATTI07686ad251a97662b870c7df74565bcbF0DCE265/asambe-web-app)
 ---
 
 ## ✨ Features
