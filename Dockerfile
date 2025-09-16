@@ -3,13 +3,20 @@ FROM python:3.10.4-slim
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
+# Set environment variables to prevent prompts during install
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install MySQL client libraries + build tools for mysqlclient
 RUN apt-get update && apt-get install -y \
-    build-essential \
     default-libmysqlclient-dev \
-    libssl-dev \
+    pkg-config \
+    gcc \
+    g++ \
+    make \
     && rm -rf /var/lib/apt/lists/*
 
+# Upgrade pip and install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip 
 # Copy requirements and install
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

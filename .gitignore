@@ -2,3 +2,4 @@
 venv/
 .vscode/
 create_users.py
+__pycache__/
