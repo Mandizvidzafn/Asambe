@@ -68,3 +68,4 @@ Werkzeug==2.3.4
 WTForms==3.0.1
 yarl==1.9.2
 gunicorn==23.0.0
+sqlalchemy-utils==0.42.0

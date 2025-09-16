@@ -8,10 +8,12 @@ from flask_cors import CORS
 import os
 from dotenv import load_dotenv
 from sqlalchemy import text
+from sqlalchemy_utils import database_exists, create_database
 from flask_mail import Mail
 from flask_uploads import IMAGES, UploadSet, configure_uploads
 from flask_restx import Api
 #from .api.driver.views import driver_views_ns
+
 
 load_dotenv()
 
@@ -108,14 +110,12 @@ def create_app():
 
 
 def create_database(app):
-    import mysql.connector
-
-    mydb = mysql.connector.connect(host=host, user=username, password=password, ssl_disabled=True)
-    my_cursor = mydb.cursor()
-    my_cursor.execute(f"CREATE DATABASE IF NOT EXISTS {db_Name}")
-    my_cursor.close()
-    mydb.database = db_Name
-
+    uri = app.config["SQLALCHEMY_DATABASE_URI"]
+    if not database_exists(uri):
+        create_database(uri)
+        print("Database created")
+    else:
+        print("Database already exists")
     with app.app_context():
         # create the tables
         db.create_all()
