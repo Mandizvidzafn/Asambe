@@ -24,9 +24,9 @@ db = SQLAlchemy()
 socketio = SocketIO()
 mail = Mail()
 photos = UploadSet("photos", IMAGES)
-username = os.getenv("MysqlUSER")
-password = os.getenv("PASSWORD")
-host = os.getenv("HOST")
+username = os.getenv("MYSQL_USER")
+password = os.getenv("MYSQL_PASSWORD")
+host = os.getenv("MYSQL_HOST")
 #api = Api(doc="/api")
 
 
