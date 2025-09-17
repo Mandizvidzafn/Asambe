@@ -82,7 +82,7 @@ def create_app():
             return Passenger.query.get(int(user_id))
 
     # create the database
-    create_database(app)
+    init_database(app)
 
     # Registering blueprints
     from .routes.passenger.auth import passenger_auth
@@ -109,7 +109,7 @@ def create_app():
     return app
 
 
-def create_database(app):
+def init_database(app):
     uri = app.config["SQLALCHEMY_DATABASE_URI"]
     if not database_exists(uri):
         create_database(uri)
